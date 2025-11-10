@@ -9,10 +9,12 @@ import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SplashComponent } from './splash/splash.component';
 import { AuthGuard } from './services/auth.guard.service';
+import { LogoutComponent } from './logout/logout.component';
 
 export const routes: Routes = [
   { path: '', component: SplashComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'home', component: HomeComponent },

@@ -1,0 +1,29 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="logo">🌾</div>
+      <h1>Déconnexion</h1>
+      <p>Vous êtes sur le point de vous déconnecter</p>
+    </div>
+
+    <div class="auth-form">
+      <!-- Confirmation Message -->
+      <p>Êtes-vous sûr de vouloir vous déconnecter ?</p>
+
+      <!-- Buttons -->
+      <div class="form-group">
+        <button class="btn-primary" (click)="logout()" [disabled]="loading">
+          <span *ngIf="!loading">Se déconnecter</span>
+          <span *ngIf="loading" class="loading-spinner">⏳ Déconnexion...</span>
+        </button>
+        <button class="btn-secondary" routerLink="/dashboard" [disabled]="loading">
+          Annuler
+        </button>
+      </div>
+
+      <!-- Success/Error Message -->
+      <div *ngIf="message" class="alert alert-success">✅ {{ message }}</div>
+      <div *ngIf="error" class="alert alert-error">❌ {{ error }}</div>
+    </div>
+  </div>
+</div>
