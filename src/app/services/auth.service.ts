@@ -73,6 +73,11 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token'); // ou sessionStorage
+  }
+
   isAuthenticated(): boolean {
     return !!this.currentUserSubject.value;
   }

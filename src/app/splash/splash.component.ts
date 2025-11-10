@@ -22,7 +22,7 @@ export class SplashComponent implements OnInit {
 
     // Rediriger après 5 secondes au total
     setTimeout(() => {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     }, 5000);
   }
 }

@@ -1,1 +1,121 @@
-<p>home works!</p>
+<div class="home-container">
+  
+  <!-- ===== HEADER AVEC IMAGE DE FOND ===== -->
+  <header class="header-section">
+    <div class="header-overlay"></div>
+    <div class="header-content">
+      
+      <!-- Top du header avec salutation et icônes -->
+      <div class="header-top">
+        <h1 class="greeting">Bonjour </h1>
+        <div class="header-actions">
+          <button class="icon-button" aria-label="Notifications">
+            <span>🔔</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Barre de recherche -->
+      <div class="search-bar">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" placeholder="Search" class="search-input" />
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== CONTENU PRINCIPAL ===== -->
+  <main class="main-content">
+    
+    <!-- SECTION: Fonctionnalités principales -->
+    <section class="section">
+      <h2 class="section-title">Fonctionnalités</h2>
+      <div class="features-grid">
+        
+        <!-- Bouton Détection de maladies -->
+        <button class="feature-card feature-detection" (click)="navigateToDetection()">
+          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+          <p class="feature-text">Détection Maladies</p>
+        </button>
+        
+        <!-- Bouton Classification -->
+        <button class="feature-card feature-classification" (click)="navigateToClassification()">
+          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+          </svg>
+          <p class="feature-text">Classification</p>
+        </button>
+        
+        <!-- Bouton Suivi de culture (nécessite authentification) -->
+        <button class="feature-card feature-suivi" (click)="navigateToSuivi()">
+          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <p class="feature-text">Suivi Culture</p>
+          <!-- Indicateur rouge si non authentifié -->
+          <span *ngIf="!isAuthenticated" class="auth-indicator"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION: Découvrir plus de plantes -->
+    <section class="section">
+      <h2 class="section-title">Découvrir plus des plantes</h2>
+      <div class="plants-grid">
+        <div *ngFor="let plant of discoveredPlants" class="plant-card">
+          <div class="plant-image-placeholder">
+            <span class="plant-emoji">{{ plant.emoji }}</span>
+          </div>
+          <p class="plant-name">{{ plant.name }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Les plantes les plus cultivées -->
+    <section class="section">
+      <h2 class="section-title">Les plantes les plus cultivés</h2>
+      <div class="plants-grid">
+        <div *ngFor="let plant of popularPlants" class="plant-card-large">
+          <div class="plant-image-placeholder">
+            <span class="plant-emoji-large">{{ plant.emoji }}</span>
+          </div>
+          <div class="plant-info">
+            <p class="plant-name-large">{{ plant.name }}</p>
+            <p class="plant-description">{{ plant.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== NAVIGATION BOTTOM ===== -->
+  <nav class="bottom-nav">
+        <!-- Accueil -->
+        <button class="nav-item active">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+        </svg>
+        </button>
+
+        <!-- Bouton Caméra central (en relief) -->
+        <button class="nav-item camera-button" (click)="navigateToDetection()">
+        <svg class="camera-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+        </svg>
+        </button>
+        
+        <!-- Suivi -->
+        <button class="nav-item" (click)="navigateToSuivi()">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+        </svg>
+        </button>
+    </nav>
+</div>

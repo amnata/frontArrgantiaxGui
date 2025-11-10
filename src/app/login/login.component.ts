@@ -42,7 +42,7 @@ export class LoginComponent {
       next: (response) => {
         console.log('✅ Connexion réussie', response);
         this.loading = false;
-        this.router.navigate(['/detection']); 
+        this.router.navigate(['/home']); 
       },
       error: (err) => {
         console.error('❌ Erreur de connexion', err);

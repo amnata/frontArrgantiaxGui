@@ -8,15 +8,18 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SplashComponent } from './splash/splash.component';
+import { AuthGuard } from './services/auth.guard.service';
 
 export const routes: Routes = [
   { path: '', component: SplashComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'detection', component: DiseaseDetectionComponent },
-  { path: 'classification', component: CropClassificationComponent },
-  { path: 'tracking', component: GrowthTrackingComponent }
+  { path: 'home', component: HomeComponent },
+  { path: 'detection', component: DiseaseDetectionComponent, canActivate: [AuthGuard] },
+  { path: 'classification', component: CropClassificationComponent , canActivate: [AuthGuard] },
+  { path: 'tracking', component: GrowthTrackingComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
