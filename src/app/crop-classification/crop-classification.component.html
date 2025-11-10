@@ -1,0 +1,117 @@
+<div class="container">
+  <h1>🌿 Classification de Culture</h1>
+  <p class="subtitle">Identification automatique des cultures : Riz, Oignon, Arachide</p>
+  
+  <!-- Upload Section -->
+  <div class="upload-section">
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden #fileInput>
+    <div class="drop-zone" (click)="fileInput.click()">
+      <div class="drop-content">
+        <span class="upload-icon">📸</span>
+        <p><strong>Téléchargez une photo de votre culture</strong></p>
+        <small>Notre IA identifiera automatiquement le type de culture</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview Section -->
+  <div *ngIf="previewUrl" class="preview-section">
+    <h3>Image sélectionnée</h3>
+    <img [src]="previewUrl" alt="Aperçu" class="preview-image">
+  </div>
+
+  <!-- Crops Info -->
+  <div class="crops-info">
+    <h3>🌾 Cultures Identifiables</h3>
+    <div class="crops-grid">
+      <div class="crop-card">
+        <div class="crop-icon">🥜</div>
+        <h4>Arachide</h4>
+        <p class="crop-description">Légumineuse oléagineuse, résistante à la sécheresse</p>
+        <div class="crop-details">
+          <span class="detail-tag">Saison: Sèche</span>
+          <span class="detail-tag">Cycle: 4-5 mois</span>
+        </div>
+        <div class="crop-features">
+          <div class="feature">🌱 Semis direct</div>
+          <div class="feature">💧 Irrigation modérée</div>
+        </div>
+      </div>
+      
+      <div class="crop-card">
+        <div class="crop-icon">🧅</div>
+        <h4>Oignon</h4>
+        <p class="crop-description">Légume bulbe, sensible aux maladies fongiques</p>
+        <div class="crop-details">
+          <span class="detail-tag">Saison: Tempérée</span>
+          <span class="detail-tag">Cycle: 4-5 mois</span>
+        </div>
+        <div class="crop-features">
+          <div class="feature">🔄 Rotation 3-4 ans</div>
+          <div class="feature">💦 Arrosage régulier</div>
+        </div>
+      </div>
+      
+      <div class="crop-card">
+        <div class="crop-icon">🍚</div>
+        <h4>Riz</h4>
+        <p class="crop-description">Culture céréalière de base</p>
+        <div class="crop-details">
+          <span class="detail-tag">Saison: Humide</span>
+          <span class="detail-tag">Cycle: 3-6 mois</span>
+        </div>
+        <div class="crop-features">
+          <div class="feature">🌊 Culture inondée</div>
+          <div class="feature">🔄 Repiquage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Classify Button -->
+  <div class="action-section" *ngIf="selectedFile">
+    <button (click)="onClassify()" [disabled]="loading" class="classify-btn">
+      <span *ngIf="!loading">🌿 Identifier la Culture</span>
+      <span *ngIf="loading">⏳ Identification en cours...</span>
+    </button>
+  </div>
+
+  <!-- Results -->
+  <div *ngIf="classificationResult" class="results-section">
+    <h2>📊 Résultat de l'Identification</h2>
+    
+    <div class="main-result">
+      <div class="result-header">
+        <h3>{{classificationResult.icon}} Culture Identifiée : <strong>{{classificationResult.crop}}</strong></h3>
+        <span class="confidence-badge">{{classificationResult.confidence}}%</span>
+      </div>
+    </div>
+
+    <div class="details-section">
+      <div class="detail-card">
+        <h4>📖 Description</h4>
+        <p>{{classificationResult.description}}</p>
+      </div>
+
+      <div class="detail-card">
+        <h4>💡 Conseils de culture</h4>
+        <ul>
+          <li *ngFor="let tip of classificationResult.tips">{{tip}}</li>
+        </ul>
+      </div>
+
+      <div class="detail-card">
+        <h4>📈 Probabilités détaillées</h4>
+        <div class="probability-bars">
+          <div *ngFor="let prob of classificationResult.probabilities" class="probability-item">
+            <span class="label">{{prob.name}}</span>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="prob.value"></div>
+            </div>
+            <span class="percentage">{{prob.value}}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

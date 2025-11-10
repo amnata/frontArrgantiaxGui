@@ -1,0 +1,193 @@
+<div class="container">
+  <h1>📈 Suivi de Croissance</h1>
+  <p class="subtitle">Monitoring et analyse de l'évolution de vos cultures</p>
+
+  <!-- Add Measurement -->
+  <div class="add-measurement">
+    <h3>➕ Ajouter une Mesure</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Culture</label>
+        <select [(ngModel)]="newMeasurement.crop" class="form-control">
+          <option value="">Sélectionner...</option>
+          <option value="Arachide">🥜 Arachide</option>
+          <option value="Oignon">🧅 Oignon</option>
+          <option value="Riz">🍚 Riz</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Hauteur (cm)</label>
+        <input type="number" [(ngModel)]="newMeasurement.height" class="form-control" placeholder="Ex: 45">
+      </div>
+      
+      <div class="form-group">
+        <label>Stade de croissance</label>
+        <select [(ngModel)]="newMeasurement.stage" class="form-control">
+          <option value="">Sélectionner...</option>
+          <option value="Germination">🌱 Germination</option>
+          <option value="Végétation">🌿 Végétation</option>
+          <option value="Floraison">🌸 Floraison</option>
+          <option value="Fructification">🍇 Fructification</option>
+          <option value="Maturation">🌾 Maturation</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>État sanitaire</label>
+        <select [(ngModel)]="newMeasurement.health" class="form-control">
+          <option value="">Sélectionner...</option>
+          <option value="Excellent">✅ Excellent</option>
+          <option value="Bon">🟢 Bon</option>
+          <option value="Moyen">🟡 Moyen</option>
+          <option value="Faible">🟠 Faible</option>
+          <option value="Critique">🔴 Critique</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" [(ngModel)]="newMeasurement.date" class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label>Notes (optionnel)</label>
+        <textarea [(ngModel)]="newMeasurement.notes" class="form-control" rows="2" placeholder="Observations..."></textarea>
+      </div>
+    </div>
+    
+    <button (click)="addMeasurement()" class="add-btn" [disabled]="!isFormValid()">
+      ➕ Enregistrer la Mesure
+    </button>
+  </div>
+
+  <!-- Statistics Dashboard -->
+  <div class="statistics-dashboard" *ngIf="measurements.length > 0">
+    <h3>📊 Statistiques Globales</h3>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📏</div>
+        <div class="stat-value">{{getAverageHeight()}} cm</div>
+        <div class="stat-label">Hauteur Moyenne</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">🌱</div>
+        <div class="stat-value">{{measurements.length}}</div>
+        <div class="stat-label">Mesures Enregistrées</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">🌾</div>
+        <div class="stat-value">{{getActiveCrops()}}</div>
+        <div class="stat-label">Cultures Suivies</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value">{{getHealthyPercentage()}}%</div>
+        <div class="stat-label">Santé Globale</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Growth Chart -->
+  <div class="growth-chart" *ngIf="measurements.length > 0">
+    <h3>📈 Évolution de la Croissance</h3>
+    <div class="chart-container">
+      <div class="chart-legend">
+        <div class="legend-item" *ngFor="let crop of getUniqueCrops()">
+          <span class="legend-color" [style.background-color]="getCropColor(crop)"></span>
+          <span>{{crop}}</span>
+        </div>
+      </div>
+      <div class="chart-area">
+        <svg viewBox="0 0 800 400" class="chart-svg">
+          <!-- Grid lines -->
+          <line x1="50" y1="20" x2="50" y2="350" stroke="#e2e8f0" stroke-width="2"/>
+          <line x1="50" y1="350" x2="750" y2="350" stroke="#e2e8f0" stroke-width="2"/>
+          
+          <!-- Y-axis labels -->
+          <text x="30" y="30" font-size="12" fill="#718096">100cm</text>
+          <text x="30" y="105" font-size="12" fill="#718096">75cm</text>
+          <text x="30" y="180" font-size="12" fill="#718096">50cm</text>
+          <text x="30" y="255" font-size="12" fill="#718096">25cm</text>
+          <text x="30" y="355" font-size="12" fill="#718096">0cm</text>
+          
+          <!-- Data lines -->
+          <ng-container *ngFor="let crop of getUniqueCrops()">
+            <polyline 
+              [attr.points]="getChartPoints(crop)" 
+              fill="none" 
+              [attr.stroke]="getCropColor(crop)" 
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+            <g *ngFor="let point of getChartPointsArray(crop)">
+              <circle 
+                [attr.cx]="point.x" 
+                [attr.cy]="point.y" 
+                r="6" 
+                [attr.fill]="getCropColor(crop)"/>
+            </g>
+          </ng-container>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Measurements Table -->
+  <div class="measurements-table" *ngIf="measurements.length > 0">
+    <h3>📋 Historique des Mesures</h3>
+    
+    <div class="filter-section">
+      <label>Filtrer par culture:</label>
+      <select [(ngModel)]="filterCrop" class="form-control filter-select">
+        <option value="">Toutes les cultures</option>
+        <option *ngFor="let crop of getUniqueCrops()" [value]="crop">{{crop}}</option>
+      </select>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Culture</th>
+            <th>Hauteur</th>
+            <th>Stade</th>
+            <th>État Sanitaire</th>
+            <th>Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of getFilteredMeasurements(); let i = index">
+            <td>{{formatDate(m.date)}}</td>
+            <td>{{m.crop}}</td>
+            <td><strong>{{m.height}} cm</strong></td>
+            <td>{{m.stage}}</td>
+            <td>
+              <span class="health-badge" [ngClass]="'health-' + getHealthClass(m.health)">
+                {{m.health}}
+              </span>
+            </td>
+            <td>{{m.notes || '-'}}</td>
+            <td>
+              <button (click)="deleteMeasurement(i)" class="delete-btn" title="Supprimer">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="measurements.length === 0">
+    <div class="empty-icon">📊</div>
+    <h3>Aucune mesure enregistrée</h3>
+    <p>Commencez à suivre la croissance de vos cultures en ajoutant votre première mesure ci-dessus.</p>
+  </div>
+</div>

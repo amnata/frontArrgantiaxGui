@@ -1,0 +1,203 @@
+.container { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  background: white; 
+  border-radius: 16px; 
+  padding: 2rem; 
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1); 
+}
+
+h1 { 
+  color: #2d3748; 
+  font-size: 2rem; 
+  margin-bottom: 0.5rem; 
+}
+
+.subtitle { 
+  color: #718096; 
+  margin-bottom: 2rem; 
+}
+
+.upload-section { 
+  margin: 2rem 0; 
+}
+
+.drop-zone { 
+  border: 3px dashed #cbd5e0; 
+  border-radius: 12px; 
+  padding: 3rem; 
+  text-align: center; 
+  cursor: pointer; 
+  transition: all 0.3s; 
+}
+
+.drop-zone:hover { 
+  border-color: #667eea; 
+  background: #f7fafc; 
+}
+
+.upload-icon { 
+  font-size: 3rem; 
+  display: block; 
+  margin-bottom: 1rem; 
+}
+
+.preview-section { 
+  margin: 2rem 0; 
+}
+
+.preview-container { 
+  display: flex; 
+  gap: 2rem; 
+  align-items: center; 
+}
+
+.preview-image { 
+  max-width: 300px; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+}
+
+.preview-info p { 
+  margin: 0.5rem 0; 
+  color: #4a5568; 
+}
+
+.disease-info { 
+  margin: 3rem 0; 
+}
+
+.culture-diseases { 
+  margin: 2rem 0; 
+}
+
+.culture-diseases h4 { 
+  color: #2d3748; 
+  font-size: 1.3rem; 
+  margin-bottom: 1rem; 
+}
+
+.diseases-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  gap: 1.5rem; 
+  margin-bottom: 2rem; 
+}
+
+.disease-card { 
+  background: #f7fafc; 
+  border-radius: 12px; 
+  padding: 1.5rem; 
+  border-left: 4px solid #fc8181; 
+}
+
+.disease-card.healthy { 
+  border-left-color: #48bb78; 
+}
+
+.disease-icon { 
+  font-size: 2.5rem; 
+  margin-bottom: 0.5rem; 
+}
+
+.disease-card h4 { 
+  margin: 0.5rem 0; 
+  color: #2d3748; 
+}
+
+.disease-type { 
+  color: #718096; 
+  font-size: 0.9rem; 
+  margin-bottom: 1rem; 
+}
+
+.disease-card ul { 
+  margin: 0; 
+  padding-left: 1.2rem; 
+}
+
+.disease-card li { 
+  color: #4a5568; 
+  margin: 0.3rem 0; 
+}
+
+.action-section { 
+  text-align: center; 
+  margin: 2rem 0; 
+}
+
+.detect-btn { 
+  background: #667eea; 
+  color: white; 
+  border: none; 
+  padding: 1rem 3rem; 
+  border-radius: 12px; 
+  font-size: 1.1rem; 
+  cursor: pointer; 
+  transition: all 0.3s; 
+  font-weight: 600; 
+}
+
+.detect-btn:hover:not(:disabled) { 
+  background: #5a67d8; 
+  transform: translateY(-2px); 
+  box-shadow: 0 4px 12px rgba(102,126,234,0.4); 
+}
+
+.detect-btn:disabled { 
+  opacity: 0.6; 
+  cursor: not-allowed; 
+}
+
+.results-section { 
+  margin: 3rem 0; 
+}
+
+.main-result { 
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+  color: white; 
+  padding: 2rem; 
+  border-radius: 12px; 
+  margin-bottom: 2rem; 
+}
+
+.diagnosis-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 1rem; 
+}
+
+.confidence-badge { 
+  background: rgba(255,255,255,0.3); 
+  padding: 0.5rem 1rem; 
+  border-radius: 20px; 
+  font-weight: 600; 
+}
+
+.details-section { 
+  display: grid; 
+  gap: 1.5rem; 
+}
+
+.detail-card { 
+  background: #f7fafc; 
+  padding: 1.5rem; 
+  border-radius: 12px; 
+  border-left: 4px solid #667eea; 
+}
+
+.detail-card h4 { 
+  margin-top: 0; 
+  color: #2d3748; 
+}
+
+.detail-card ul { 
+  margin: 0.5rem 0; 
+  padding-left: 1.5rem; 
+}
+
+.detail-card li { 
+  margin: 0.5rem 0; 
+  color: #4a5568; 
+}

@@ -1,0 +1,182 @@
+<div class="container">
+  <h1>🔍 Détection de Maladies des Plantes</h1>
+  <p class="subtitle">Analyse intelligente par IA pour toutes les cultures</p>
+  
+  <!-- Upload Section -->
+  <div class="upload-section">
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden #fileInput>
+    <div class="drop-zone" (click)="fileInput.click()">
+      <div class="drop-content">
+        <span class="upload-icon">📁</span>
+        <p><strong>Glissez-déposez votre image ici ou cliquez pour parcourir</strong></p>
+        <small>Formats supportés: JPG, PNG, JPEG • Taille max: 10MB</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview Section -->
+  <div *ngIf="previewUrl" class="preview-section">
+    <h3>Aperçu de l'image</h3>
+    <div class="preview-container">
+      <img [src]="previewUrl" alt="Aperçu" class="preview-image">
+      <div class="preview-info">
+        <p><strong>Fichier:</strong> {{selectedFile?.name}}</p>
+        <p><strong>Taille:</strong> {{(selectedFile?.size || 0) / 1024 | number:'1.0-0'}} KB</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diseases Info -->
+  <div class="disease-info">
+    <h3>🦠 Maladies Détectables</h3>
+    
+    <div class="culture-diseases">
+      <h4>🧅 Maladies de l'Oignon</h4>
+      <div class="diseases-grid">
+        <div class="disease-card">
+          <div class="disease-icon">🍄</div>
+          <h4>Alternaria</h4>
+          <p class="disease-type">Maladie Fongique</p>
+          <ul>
+            <li>Taches circulaires brunes</li>
+            <li>Feuilles jaunissantes</li>
+            <li>Pourriture des bulbes</li>
+          </ul>
+        </div>
+        
+        <div class="disease-card">
+          <div class="disease-icon">🦠</div>
+          <h4>Virosis</h4>
+          <p class="disease-type">Infection Virale</p>
+          <ul>
+            <li>Mosaïque sur feuilles</li>
+            <li>Nanisme des plantes</li>
+            <li>Bulbes déformés</li>
+          </ul>
+        </div>
+        
+        <div class="disease-card healthy">
+          <div class="disease-icon">✅</div>
+          <h4>Oignon sain</h4>
+          <p class="disease-type">État Optimal</p>
+          <ul>
+            <li>Feuilles vertes uniformes</li>
+            <li>Croissance vigoureuse</li>
+            <li>Bulbes bien formés</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="culture-diseases">
+      <h4>🥜 Maladies de l'Arachide</h4>
+      <div class="diseases-grid">
+        <div class="disease-card">
+          <div class="disease-icon">🍂</div>
+          <h4>Taches foliaires</h4>
+          <p class="disease-type">Maladie Fongique</p>
+          <ul>
+            <li>Taches brunes circulaires</li>
+            <li>Chute des feuilles</li>
+            <li>Impact sur rendement</li>
+          </ul>
+        </div>
+        
+        <div class="disease-card">
+          <div class="disease-icon">🟠</div>
+          <h4>Rouille</h4>
+          <p class="disease-type">Maladie Fongique</p>
+          <ul>
+            <li>Pustules orangées</li>
+            <li>Défoliation précoce</li>
+            <li>Grains de mauvaise qualité</li>
+          </ul>
+        </div>
+        
+        <div class="disease-card healthy">
+          <div class="disease-icon">✅</div>
+          <h4>Arachide saine</h4>
+          <p class="disease-type">État Optimal</p>
+          <ul>
+            <li>Feuilles vertes vigoureuses</li>
+            <li>Gousses bien formées</li>
+            <li>Croissance uniforme</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="culture-diseases">
+      <h4>🍚 Maladies du Riz</h4>
+      <div class="diseases-grid">
+        <div class="disease-card">
+          <div class="disease-icon">🟤</div>
+          <h4>Taches brunes</h4>
+          <p class="disease-type">Maladie Fongique</p>
+          <ul>
+            <li>Taches brunes ovales</li>
+            <li>Pourriture des gaines</li>
+            <li>Grains décolorés</li>
+          </ul>
+        </div>
+        
+        <div class="disease-card">
+          <div class="disease-icon">💨</div>
+          <h4>Blast</h4>
+          <p class="disease-type">Maladie Fongique</p>
+          <ul>
+            <li>Taches en "œil de poisson"</li>
+            <li>Collets pourris</li>
+            <li>Perte de rendement</li>
+          </ul>
+        </div>
+        
+        <div class="disease-card healthy">
+          <div class="disease-icon">✅</div>
+          <h4>Riz sain</h4>
+          <p class="disease-type">État Optimal</p>
+          <ul>
+            <li>Plants verts vigoureux</li>
+            <li>Tiges solides</li>
+            <li>Panicules bien formées</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detect Button -->
+  <div class="action-section" *ngIf="selectedFile">
+    <button (click)="onDetect()" [disabled]="loading" class="detect-btn">
+      <span *ngIf="!loading">🔍 Analyser les Maladies</span>
+      <span *ngIf="loading">⏳ Analyse en cours...</span>
+    </button>
+  </div>
+
+  <!-- Results -->
+  <div *ngIf="detectionResult" class="results-section">
+    <h2>📊 Résultats de l'Analyse</h2>
+    
+    <div class="main-result">
+      <div class="diagnosis-header">
+        <h3>🔍 Diagnostic : <strong>{{detectionResult.disease}}</strong></h3>
+        <span class="confidence-badge">{{detectionResult.confidence}}%</span>
+      </div>
+      <p class="severity">🚨 Niveau de sévérité: <strong>{{detectionResult.severity}}</strong></p>
+    </div>
+
+    <div class="details-section">
+      <div class="detail-card">
+        <h4>🩺 État de santé</h4>
+        <p>{{detectionResult.healthStatus}}</p>
+      </div>
+
+      <div class="detail-card">
+        <h4>🛡️ Recommandations</h4>
+        <ul>
+          <li *ngFor="let rec of detectionResult.recommendations">{{rec}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
