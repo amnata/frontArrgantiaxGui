@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DetectDeseaseService } from '../services/detect-desease.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class DiseaseDetectionComponent {
   error: string | null = null;
   apiStatus: 'online' | 'offline' = 'online';
 
-  constructor(private diseaseService: DetectDeseaseService) {
+  constructor(private diseaseService: DetectDeseaseService, private router: Router) {
     this.checkApiStatus();
   }
 
@@ -195,5 +196,9 @@ calculateSeverity(disease: string): string {
     this.previewUrl = null;
     this.detectionResult = null;
     this.error = null;
+  }
+
+    goHome(){
+    this.router.navigate(['/home']);
   }
 }

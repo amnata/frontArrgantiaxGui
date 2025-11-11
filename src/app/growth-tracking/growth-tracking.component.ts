@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-growth-tracking',
@@ -12,6 +13,7 @@ export class GrowthTrackingComponent {
   measurements: any[] = [];
   filterCrop = '';
   
+  constructor(private router: Router){}
   newMeasurement = {
     crop: '',
     height: null as number | null,
@@ -135,5 +137,8 @@ export class GrowthTrackingComponent {
       x: 50 + (i * xStep),
       y: 350 - ((m.height / maxHeight) * chartHeight)
     }));
+  }
+    goHome(){
+    this.router.navigate(['/home']);
   }
 }

@@ -1,7 +1,11 @@
 <div class="container">
+  <button class="btn-cancel" (click)="goHome()">
+  <img src="assets/icons/back.svg" alt="Retour" class="icon" />
+</button>
+
   <h1>🌿 Classification de Culture</h1>
   <p class="subtitle">Identification automatique des cultures : Riz, Oignon, Arachide</p>
-  
+  <!-- Option 2 : Flèche retour -->
   <!-- Upload Section -->
   <div class="upload-section">
     <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden #fileInput>

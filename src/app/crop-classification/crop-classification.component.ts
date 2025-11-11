@@ -180,7 +180,7 @@
 //   }
 // }
 
-
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ClassifierCultureService } from '../services/classifier-culture.service';
@@ -199,7 +199,7 @@ export class CropClassificationComponent {
   error: string | null = null;
   apiStatus: 'online' | 'offline' = 'online';
 
-  constructor(private classifierService: ClassifierCultureService) {
+  constructor(private classifierService: ClassifierCultureService, private router: Router) {
     this.checkApiStatus();
   }
 
@@ -434,5 +434,8 @@ formatProbabilities(predictions: any[]): any[] {
     this.previewUrl = null;
     this.classificationResult = null;
     this.error = null;
+  }
+  goHome(){
+    this.router.navigate(['/home']);
   }
 }
