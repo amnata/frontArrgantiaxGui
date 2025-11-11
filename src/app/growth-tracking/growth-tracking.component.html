@@ -1,50 +1,91 @@
 <div class="container">
-    <button class="btn-cancel" (click)="goHome()">
-  <img src="assets/icons/back.svg" alt="Retour" class="icon" />
-</button>
+  <button class="btn-cancel" (click)="goHome()">
+    <img src="assets/icons/back.svg" alt="Retour" class="icon" />
+  </button>
+  
   <h1>📈 Suivi de Croissance</h1>
   <p class="subtitle">Monitoring et analyse de l'évolution de vos cultures</p>
+
+  <!-- Prédictions IA -->
+  <div class="predictions-panel" *ngIf="showPredictions && predictions">
+    <h3>🎯 Prédictions IA</h3>
+    <div class="predictions-grid">
+      <div class="prediction-card">
+        <div class="prediction-icon">📏</div>
+        <div class="prediction-value">{{ (predictions.predictions?.predicted_height ?? 0)?.toFixed(1) }} cm</div>
+        <div class="prediction-label">Hauteur Prédite</div>
+      </div>
+      
+      <div class="prediction-card">
+        <div class="prediction-icon">❤️</div>
+        <div class="prediction-value">{{ ((predictions.predictions?.health_score ?? 0) * 100)?.toFixed(0) }}%</div>
+        <div class="prediction-label">Score Santé</div>
+      </div>
+      
+      <div class="prediction-card">
+        <div class="prediction-icon">📈</div>
+        <div class="prediction-value">{{ (predictions.predictions?.growth_rate ?? 0)?.toFixed(1) }} cm/j</div>
+        <div class="prediction-label">Taux Croissance</div>
+      </div>
+
+      <div class="prediction-card">
+        <div class="prediction-icon">🍃</div>
+        <div class="prediction-value">{{ (predictions.predictions?.predicted_chlorophyll ?? 0)?.toFixed(1) }} SPAD</div>
+        <div class="prediction-label">Chlorophylle Prédite</div>
+      </div>
+    </div>
+
+    <!-- Recommandations IA -->
+    <div class="recommendations" *ngIf="predictions.recommendations && predictions.recommendations.length > 0">
+      <h4>💡 Recommandations Intelligentes</h4>
+      <ul>
+        <li *ngFor="let rec of predictions.recommendations">{{ rec }}</li>
+      </ul>
+    </div>
+
+    <div class="model-info" *ngIf="predictions.predictions?.model_used">
+      <small>Modèle utilisé: {{ predictions.predictions.model_used }}</small>
+    </div>
+
+    <button class="close-predictions" (click)="showPredictions = false">
+      ✕ Fermer
+    </button>
+  </div>
 
   <!-- Add Measurement -->
   <div class="add-measurement">
     <h3>➕ Ajouter une Mesure</h3>
     <div class="form-grid">
       <div class="form-group">
-        <label>Culture</label>
-        <select [(ngModel)]="newMeasurement.crop" class="form-control">
-          <option value="">Sélectionner...</option>
-          <option value="Arachide">🥜 Arachide</option>
-          <option value="Oignon">🧅 Oignon</option>
-          <option value="Riz">🍚 Riz</option>
+        <label>Plante</label>
+        <select [(ngModel)]="newMeasurement.plantId" class="form-control">
+          <option value="0">Sélectionner une plante...</option>
+          <option *ngFor="let plant of plants" [value]="plant.id">
+            {{ plant.name }} ({{ plant.cropType }})
+          </option>
         </select>
       </div>
       
       <div class="form-group">
         <label>Hauteur (cm)</label>
-        <input type="number" [(ngModel)]="newMeasurement.height" class="form-control" placeholder="Ex: 45">
+        <input type="number" [(ngModel)]="newMeasurement.height" class="form-control" placeholder="Ex: 45" min="0" step="0.1">
       </div>
       
       <div class="form-group">
         <label>Stade de croissance</label>
         <select [(ngModel)]="newMeasurement.stage" class="form-control">
-          <option value="">Sélectionner...</option>
-          <option value="Germination">🌱 Germination</option>
-          <option value="Végétation">🌿 Végétation</option>
-          <option value="Floraison">🌸 Floraison</option>
-          <option value="Fructification">🍇 Fructification</option>
-          <option value="Maturation">🌾 Maturation</option>
+          <option *ngFor="let stage of growthStages" [value]="stage.value">
+            {{ stage.label }}
+          </option>
         </select>
       </div>
       
       <div class="form-group">
         <label>État sanitaire</label>
-        <select [(ngModel)]="newMeasurement.health" class="form-control">
-          <option value="">Sélectionner...</option>
-          <option value="Excellent">✅ Excellent</option>
-          <option value="Bon">🟢 Bon</option>
-          <option value="Moyen">🟡 Moyen</option>
-          <option value="Faible">🟠 Faible</option>
-          <option value="Critique">🔴 Critique</option>
+        <select [(ngModel)]="newMeasurement.healthStatus" class="form-control">
+          <option *ngFor="let health of healthStatuses" [value]="health.value">
+            {{ health.label }}
+          </option>
         </select>
       </div>
       
@@ -57,11 +98,47 @@
         <label>Notes (optionnel)</label>
         <textarea [(ngModel)]="newMeasurement.notes" class="form-control" rows="2" placeholder="Observations..."></textarea>
       </div>
+
+      <!-- Capteurs pour l'IA (optionnel) -->
+      <div class="form-group full-width">
+        <h4>📊 Données Capteurs (Optionnel - pour l'IA)</h4>
+        <div class="sensors-grid">
+          <div class="sensor-input">
+            <label>Chlorophylle (SPAD)</label>
+            <input type="number" [(ngModel)]="newMeasurement.chlorophyllContent" placeholder="35.0" step="0.1">
+          </div>
+          <div class="sensor-input">
+            <label>Température Air (°C)</label>
+            <input type="number" [(ngModel)]="newMeasurement.ambientTemperature" placeholder="25.0" step="0.1">
+          </div>
+          <div class="sensor-input">
+            <label>Température Sol (°C)</label>
+            <input type="number" [(ngModel)]="newMeasurement.soilTemperature" placeholder="23.0" step="0.1">
+          </div>
+          <div class="sensor-input">
+            <label>Humidité (%)</label>
+            <input type="number" [(ngModel)]="newMeasurement.humidity" placeholder="60.0" step="0.1">
+          </div>
+          <div class="sensor-input">
+            <label>Lumière (lux)</label>
+            <input type="number" [(ngModel)]="newMeasurement.lightIntensity" placeholder="1200" step="10">
+          </div>
+          <div class="sensor-input">
+            <label>Signal Électro (mV)</label>
+            <input type="number" [(ngModel)]="newMeasurement.electrochemicalSignal" placeholder="0.5" step="0.01">
+          </div>
+        </div>
+      </div>
     </div>
     
-    <button (click)="addMeasurement()" class="add-btn" [disabled]="!isFormValid()">
-      ➕ Enregistrer la Mesure
+    <button (click)="addMeasurement()" class="add-btn" [disabled]="!isFormValid() || isLoading">
+      <span *ngIf="!isLoading">➕ Enregistrer avec Analyse IA</span>
+      <span *ngIf="isLoading">⏳ Traitement en cours...</span>
     </button>
+
+    <div class="connection-status" *ngIf="plants.length === 0">
+      <p>🔌 Connexion au serveur... Utilisation du mode local</p>
+    </div>
   </div>
 
   <!-- Statistics Dashboard -->
@@ -101,7 +178,7 @@
       <div class="chart-legend">
         <div class="legend-item" *ngFor="let crop of getUniqueCrops()">
           <span class="legend-color" [style.background-color]="getCropColor(crop)"></span>
-          <span>{{crop}}</span>
+          <span>{{getCropDisplayName(crop)}}</span>
         </div>
       </div>
       <div class="chart-area">
@@ -132,6 +209,7 @@
                 [attr.cy]="point.y" 
                 r="6" 
                 [attr.fill]="getCropColor(crop)"/>
+              <title>Hauteur: {{point.height}} cm - Date: {{point.date}}</title>
             </g>
           </ng-container>
         </svg>
@@ -144,11 +222,48 @@
     <h3>📋 Historique des Mesures</h3>
     
     <div class="filter-section">
-      <label>Filtrer par culture:</label>
-      <select [(ngModel)]="filterCrop" class="form-control filter-select">
-        <option value="">Toutes les cultures</option>
-        <option *ngFor="let crop of getUniqueCrops()" [value]="crop">{{crop}}</option>
-      </select>
+      <!-- Filtre par culture -->
+      <div class="filter-group">
+        <label>Filtrer par culture:</label>
+        <select [(ngModel)]="filterCrop" class="form-control filter-select">
+          <option value="">Toutes les cultures</option>
+          <option *ngFor="let crop of getAvailableCrops()" [value]="crop">
+            {{getCropDisplayName(crop)}}
+          </option>
+        </select>
+      </div>
+      
+      <!-- Prédictions par culture -->
+      <div class="filter-group">
+        <label>Prédictions pour la culture:</label>
+        <select [(ngModel)]="selectedCropForPrediction" class="form-control">
+          <option value="">Choisir une culture...</option>
+          <option *ngFor="let crop of getAvailableCrops()" [value]="crop">
+            {{getCropDisplayName(crop)}}
+          </option>
+        </select>
+        
+        <button class="predict-btn" (click)="getPredictionsByCrop()" 
+                [disabled]="!selectedCropForPrediction">
+          🎯 Obtenir des Prédictions
+        </button>
+      </div>
+
+      <!-- Prédictions par plante spécifique -->
+      <div class="filter-group">
+        <label>Ou par plante spécifique:</label>
+        <select [(ngModel)]="selectedPlantForPrediction" class="form-control">
+          <option value="0">Choisir une plante...</option>
+          <option *ngFor="let plant of plants" [value]="plant.id">
+            {{ plant.name }} ({{ plant.cropType }})
+          </option>
+        </select>
+        
+        <button class="predict-btn" (click)="getPredictions(selectedPlantForPrediction)" 
+                [disabled]="!selectedPlantForPrediction">
+          🎯 Prédictions Plante
+        </button>
+      </div>
     </div>
 
     <div class="table-wrapper">
@@ -156,6 +271,7 @@
         <thead>
           <tr>
             <th>Date</th>
+            <th>Plante</th>
             <th>Culture</th>
             <th>Hauteur</th>
             <th>Stade</th>
@@ -166,13 +282,14 @@
         </thead>
         <tbody>
           <tr *ngFor="let m of getFilteredMeasurements(); let i = index">
-            <td>{{formatDate(m.date)}}</td>
-            <td>{{m.crop}}</td>
+            <td>{{formatDate(m.date || '')}}</td>
+            <td>{{getPlantName(m.plantId)}}</td>
+            <td>{{getCropType(m.plantId)}}</td>
             <td><strong>{{m.height}} cm</strong></td>
             <td>{{m.stage}}</td>
             <td>
-              <span class="health-badge" [ngClass]="'health-' + getHealthClass(m.health)">
-                {{m.health}}
+              <span class="health-badge" [ngClass]="'health-' + getHealthClass(m.healthStatus)">
+                {{m.healthStatus}}
               </span>
             </td>
             <td>{{m.notes || '-'}}</td>
