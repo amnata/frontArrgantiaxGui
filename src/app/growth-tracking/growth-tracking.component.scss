@@ -290,4 +290,52 @@ h1 {
 .empty-state h3 { 
   color: #4a5568; 
   margin: 1rem 0; 
+}.filter-section {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: end;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+    label {
+      font-weight: 500;
+      font-size: 0.9em;
+      color: #555;
+    }
+    
+    .form-control {
+      min-width: 200px;
+    }
+  }
+  
+  .predict-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
 }
+
+// Le reste de votre SCSS existant...
