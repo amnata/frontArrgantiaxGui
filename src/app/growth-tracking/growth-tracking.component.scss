@@ -23,7 +23,7 @@ h1 {
   padding: 2rem; 
   border-radius: 12px; 
   margin: 2rem 0; 
-  border-left: 5px solid #ed8936; 
+  border-left: 5px solid #34d399; 
 }
 
 .add-measurement h3 { 
@@ -56,12 +56,12 @@ h1 {
 
 .form-control:focus { 
   outline: none; 
-  border-color: #ed8936; 
+  border-color: #34d399; 
   box-shadow: 0 0 0 3px rgba(237,137,54,0.1); 
 }
 
 .add-btn { 
-  background: #ed8936; 
+  background: #34d399; 
   color: white; 
   border: none; 
   padding: 1rem 2rem; 
@@ -101,7 +101,7 @@ h1 {
 }
 
 .stat-card { 
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
   padding: 2rem; 
   border-radius: 12px; 
   text-align: center; 
@@ -213,7 +213,7 @@ h1 {
 }
 
 .data-table th { 
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
   color: white; 
   padding: 1rem; 
   text-align: left; 

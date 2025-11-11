@@ -48,11 +48,11 @@ export class HomeComponent {
   }
   
   navigateToSuivi() {
-    if (!this.isAuthenticated) {
-      this.showLoginModal = true;
-    } else {
-      this.router.navigate(['/tracking']);
-    }
+          this.router.navigate(['/tracking']);
+  }
+  
+  navigateTologout() {
+          this.router.navigate(['/logout']);
   }
   
 }

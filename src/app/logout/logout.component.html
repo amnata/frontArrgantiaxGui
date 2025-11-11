@@ -1,29 +1,50 @@
 <div class="auth-container">
   <div class="auth-card">
     <div class="auth-header">
-      <div class="logo">🌾</div>
+      <div class="logo-circle">🌾</div>
       <h1>Déconnexion</h1>
-      <p>Vous êtes sur le point de vous déconnecter</p>
+      <p class="subtitle">Voulez-vous vraiment quitter votre session ?</p>
     </div>
 
-    <div class="auth-form">
-      <!-- Confirmation Message -->
-      <p>Êtes-vous sûr de vouloir vous déconnecter ?</p>
+    <div class="auth-content">
+      <!-- Illustration -->
+      <div class="illustration">
+        <div class="icon-wrapper">
+          <span class="logout-icon">👋</span>
+        </div>
+        <p class="message">Votre session sera terminée et vous devrez vous reconnecter pour accéder à votre compte.</p>
+      </div>
 
       <!-- Buttons -->
-      <div class="form-group">
-        <button class="btn-primary" (click)="logout()" [disabled]="loading">
-          <span *ngIf="!loading">Se déconnecter</span>
-          <span *ngIf="loading" class="loading-spinner">⏳ Déconnexion...</span>
+      <div class="button-group">
+        <button class="btn-logout" (click)="logout()" [disabled]="loading">
+          <span *ngIf="!loading">🚪 Se déconnecter</span>
+          <span *ngIf="loading" class="loading-content">
+            <span class="spinner">⏳</span>
+            Déconnexion en cours...
+          </span>
         </button>
-        <button class="btn-secondary" routerLink="/dashboard" [disabled]="loading">
-          Annuler
+        <button class="btn-cancel" routerLink="/dashboard" [disabled]="loading">
+          <span>↩️ Rester connecté</span>
         </button>
       </div>
 
-      <!-- Success/Error Message -->
-      <div *ngIf="message" class="alert alert-success">✅ {{ message }}</div>
-      <div *ngIf="error" class="alert alert-error">❌ {{ error }}</div>
+      <!-- Success/Error Messages -->
+      <div *ngIf="message" class="alert alert-success">
+        <span class="alert-icon">✅</span>
+        <span>{{ message }}</span>
+      </div>
+      <div *ngIf="error" class="alert alert-error">
+        <span class="alert-icon">❌</span>
+        <span>{{ error }}</span>
+      </div>
     </div>
+  </div>
+
+  <!-- Background decoration -->
+  <div class="background-decoration">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
   </div>
 </div>
