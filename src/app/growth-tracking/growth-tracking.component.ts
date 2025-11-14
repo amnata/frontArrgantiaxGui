@@ -62,10 +62,30 @@ export class GrowthTrackingComponent implements OnInit {
     { value: 'CRITIQUE', label: '🔴 Critique' }
   ];
 
-  ngOnInit() {
-    this.loadPlants();
-    this.loadMeasurements();
-  }
+ ngOnInit() {
+  this.plantService.getAllPlants().subscribe({
+    next: (plants: Plant[]) => {
+      this.plants = plants;
+      if (plants.length > 0) {
+        this.newMeasurement.plantId = plants[0].id!;
+        this.selectedPlantForPrediction = plants[0].id!;
+      }
+
+      // 👉 Charger les mesures maintenant que les plantes sont connues
+      this.loadMeasurements();
+    },
+    error: () => {
+      this.plants = [
+        { id: 1, name: 'Arachide Test', cropType: 'ARACHIDE' },
+        { id: 2, name: 'Oignon Test', cropType: 'OIGNON' },
+        { id: 3, name: 'Riz Test', cropType: 'RIZ' }
+      ];
+
+      this.loadMeasurements();
+    }
+  });
+}
+
 
   loadPlants() {
     this.plantService.getAllPlants().subscribe({
@@ -328,13 +348,15 @@ export class GrowthTrackingComponent implements OnInit {
     }
   }
 
-  getFilteredMeasurements(): GrowthRecord[] {
-    if (!this.filterCrop) return this.measurements;
-    return this.measurements.filter(m => {
-      const plant = this.plants.find(p => p.id === m.plantId);
-      return plant && plant.cropType === this.filterCrop;
-    });
-  }
+getFilteredMeasurements(): GrowthRecord[] {
+  if (!this.filterCrop) return this.measurements;
+  const filter = this.filterCrop.toString().toUpperCase(); // uniformiser
+  return this.measurements.filter(m => {
+    const plant = this.plants.find(p => p.id === +m.plantId);
+    return plant && plant.cropType.toUpperCase() === filter;
+  });
+}
+
 
   // Nouvelle méthode: Obtenir les cultures disponibles depuis les plantes
   getAvailableCrops(): string[] {
@@ -342,13 +364,22 @@ export class GrowthTrackingComponent implements OnInit {
     return [...new Set(crops)];
   }
 
+  // getUniqueCrops(): string[] {
+  //   const crops = this.measurements.map(m => {
+  //     const plant = this.plants.find(p => p.id === m.plantId);
+  //     return plant ? plant.cropType : 'Inconnu';
+  //   });
+  //   return [...new Set(crops)];
+  // }
+
   getUniqueCrops(): string[] {
-    const crops = this.measurements.map(m => {
-      const plant = this.plants.find(p => p.id === m.plantId);
-      return plant ? plant.cropType : 'Inconnu';
-    });
-    return [...new Set(crops)];
-  }
+  return [...new Set(
+    this.measurements
+      .map(m => this.getCropType(m.plantId))
+      .filter(crop => crop !== 'Inconnu')
+  )];
+}
+
 
   // Nouvelle méthode: Obtenir le nom d'affichage des cultures
   getCropDisplayName(crop: string): string {
@@ -390,16 +421,17 @@ export class GrowthTrackingComponent implements OnInit {
     return Math.round((healthy / this.measurements.length) * 100);
   }
 
-  getPlantName(plantId: number): string {
-    const plant = this.plants.find(p => p.id === plantId);
+  getPlantName(plantId: number | string): string {
+    const idNum = +plantId; // convertir en nombre
+    const plant = this.plants.find(p => p.id === idNum);
     return plant ? plant.name : `Plante ${plantId}`;
   }
 
-  getCropType(plantId: number): string {
-    const plant = this.plants.find(p => p.id === plantId);
+  getCropType(plantId: number | string): string {
+    const idNum = +plantId; // convertir en nombre
+    const plant = this.plants.find(p => p.id === idNum);
     return plant ? plant.cropType : 'Inconnu';
   }
-
 
   getCropColor(crop: string): string {
     const colors: { [key: string]: string } = {
@@ -413,7 +445,7 @@ export class GrowthTrackingComponent implements OnInit {
   getChartPoints(crop: string): string {
     const cropMeasurements = this.measurements.filter(m => {
       const plantCrop = this.getCropType(m.plantId);
-      return plantCrop === crop;
+        return plantCrop.toUpperCase() === crop.toUpperCase(); 
     }).sort((a, b) => new Date(a.date!).getTime() - new Date(b.date!).getTime());
     
     if (cropMeasurements.length === 0) return '';
@@ -450,6 +482,19 @@ export class GrowthTrackingComponent implements OnInit {
       date: m.date
     }));
   }
+  get displayPrediction() {
+  if (!this.predictions) return {
+    predicted_height: 0,
+    health_score: 0,
+    growth_rate: 0,
+    predicted_chlorophyll: 0
+  };
+
+  return 'predictions' in this.predictions
+    ? this.predictions.predictions
+    : this.predictions;
+}
+
 
   goHome() {
     this.router.navigate(['/home']);

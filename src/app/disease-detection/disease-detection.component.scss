@@ -1,10 +1,17 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
 .container { 
-  max-width: 1200px; 
+  max-width: 1400px; 
+  min-height: 100vh;
   margin: 0 auto; 
   background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
-  border-radius: 24px; 
-  padding: 3rem; 
-  box-shadow: 0 20px 60px rgba(34, 197, 94, 0.15), 0 0 0 1px rgba(34, 197, 94, 0.1);
+  border-radius: 0;
+  padding: 2rem 3rem 4rem; 
+  box-shadow: none;
   position: relative;
   overflow: hidden;
 }
@@ -20,31 +27,61 @@
   pointer-events: none;
 }
 
+// Bouton retour stylisé
+.btn-cancel {
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  margin-bottom: 1.5rem;
+
+
+  &:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+  }
+}
+
 h1 { 
   background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: 2.5rem; 
+  font-size: clamp(2rem, 5vw, 3rem);
   margin-bottom: 0.5rem;
   font-weight: 800;
   letter-spacing: -0.5px;
+  text-align: center;
 }
 
 .subtitle { 
   color: #6b7280; 
-  margin-bottom: 2.5rem;
-  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  text-align: center;
+  font-weight: 500;
 }
 
 .upload-section { 
-  margin: 2.5rem 0; 
+  margin: 2rem 0; 
 }
 
 .drop-zone { 
   border: 3px dashed #34d399; 
   border-radius: 20px; 
-  padding: 4rem; 
+  padding: 3rem 2rem;
   text-align: center; 
   cursor: pointer; 
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -68,19 +105,44 @@ h1 {
 
 .drop-zone:hover { 
   border-color: #10b981; 
-  transform: scale(1.02) translateY(-2px);
-  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+  transform: scale(1.01) translateY(-2px);
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.25);
 }
 
 .upload-icon { 
-  font-size: 4rem; 
+  font-size: clamp(3rem, 8vw, 4rem);
   display: block; 
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.3));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.drop-content {
+  p {
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    margin: 1rem 0;
+    color: #047857;
+  }
+
+  small {
+    color: #6b7280;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+  }
 }
 
 .preview-section { 
-  margin: 3rem 0; 
+  margin: 2.5rem 0;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .preview-section h3 {
@@ -89,7 +151,7 @@ h1 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
   margin-bottom: 1.5rem;
 }
 
@@ -101,27 +163,38 @@ h1 {
   padding: 2rem;
   border-radius: 16px;
   border: 2px solid #d1fae5;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
 }
 
 .preview-image { 
-  max-width: 350px; 
+  max-width: 350px;
+  width: 100%;
+  height: auto;
   border-radius: 16px; 
   box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
   border: 3px solid #d1fae5;
+  object-fit: cover;
 }
 
-.preview-info p { 
-  margin: 0.75rem 0; 
-  color: #047857;
-  font-weight: 500;
-}
+.preview-info {
+  flex: 1;
+  
+  p { 
+    margin: 0.75rem 0; 
+    color: #047857;
+    font-weight: 500;
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+  }
 
-.preview-info strong {
-  color: #059669;
+  strong {
+    color: #059669;
+  }
 }
 
 .disease-info { 
-  margin: 4rem 0; 
+  margin: 3rem 0;
+  padding-top: 2rem;
+  border-top: 2px solid #d1fae5;
 }
 
 .disease-info > h3 {
@@ -130,16 +203,18 @@ h1 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 700;
-  font-size: 1.6rem;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .culture-diseases { 
-  margin: 3rem 0;
+  margin: 2.5rem 0;
   background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
   padding: 2rem;
   border-radius: 20px;
   border: 2px solid #d1fae5;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.08);
 }
 
 .culture-diseases h4 { 
@@ -147,28 +222,31 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: 1.4rem; 
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
   margin-bottom: 1.5rem;
   font-weight: 700;
 }
 
 .diseases-grid { 
   display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-  gap: 2rem; 
-  margin-bottom: 2rem; 
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  gap: 1.5rem; 
+  margin-bottom: 1.5rem; 
 }
 
 .disease-card { 
   background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
   border-radius: 16px; 
-  padding: 2rem; 
+  padding: 1.75rem; 
   border: 2px solid transparent;
   border-left: 5px solid #ef4444;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.1);
   position: relative;
   overflow: hidden;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
 }
 
 .disease-card::before {
@@ -185,7 +263,7 @@ h1 {
 }
 
 .disease-card:hover { 
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.02);
   box-shadow: 0 20px 40px rgba(239, 68, 68, 0.2);
 }
 
@@ -204,7 +282,7 @@ h1 {
 }
 
 .disease-icon { 
-  font-size: 3rem; 
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
   margin-bottom: 1rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
@@ -212,14 +290,14 @@ h1 {
 .disease-card h4 { 
   margin: 1rem 0;
   color: #1f2937;
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
   font-weight: 700;
 }
 
 .disease-type { 
   color: #6b7280; 
-  font-size: 0.95rem; 
-  margin-bottom: 1.25rem;
+  font-size: clamp(0.875rem, 1.5vw, 0.95rem);
+  margin-bottom: 1rem;
   font-weight: 600;
   padding: 0.4rem 0.8rem;
   background: rgba(255, 255, 255, 0.6);
@@ -229,27 +307,30 @@ h1 {
 
 .disease-card ul { 
   margin: 0; 
-  padding-left: 1.5rem; 
+  padding-left: 1.5rem;
+  flex: 1;
 }
 
 .disease-card li { 
   color: #4b5563; 
   margin: 0.6rem 0;
   line-height: 1.6;
+  font-size: clamp(0.875rem, 1.5vw, 0.95rem);
 }
 
 .action-section { 
   text-align: center; 
-  margin: 3rem 0; 
+  margin: 3rem 0;
+  padding: 2rem 0;
 }
 
 .detect-btn { 
   background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
   color: white; 
   border: none; 
-  padding: 1.25rem 4rem; 
+  padding: 1.25rem 3rem; 
   border-radius: 16px; 
-  font-size: 1.2rem; 
+  font-size: clamp(1rem, 2vw, 1.2rem);
   cursor: pointer; 
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 700;
@@ -272,7 +353,7 @@ h1 {
 }
 
 .detect-btn:hover:not(:disabled) { 
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.05);
   box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5);
 }
 
@@ -282,7 +363,14 @@ h1 {
 }
 
 .results-section { 
-  margin: 4rem 0; 
+  margin: 3rem 0;
+  padding: 2rem 0;
+  animation: slideUp 0.6s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .results-section h2 {
@@ -291,14 +379,15 @@ h1 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 800;
-  font-size: 1.8rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .main-result { 
   background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
   color: white; 
-  padding: 3rem; 
+  padding: 2.5rem; 
   border-radius: 20px; 
   margin-bottom: 2.5rem;
   box-shadow: 0 15px 40px rgba(16, 185, 129, 0.3);
@@ -329,11 +418,14 @@ h1 {
   margin-bottom: 1.5rem;
   position: relative;
   z-index: 1;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .diagnosis-header h3 {
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
   font-weight: 700;
+  margin: 0;
 }
 
 .confidence-badge { 
@@ -342,20 +434,21 @@ h1 {
   padding: 0.75rem 1.5rem; 
   border-radius: 25px; 
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .severity {
   position: relative;
   z-index: 1;
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   margin: 0;
 }
 
 .details-section { 
   display: grid; 
-  gap: 2rem; 
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .detail-card { 
@@ -379,7 +472,7 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
   font-weight: 700;
 }
 
@@ -387,6 +480,7 @@ h1 {
   color: #4b5563;
   line-height: 1.7;
   margin: 1rem 0;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 
 .detail-card ul { 
@@ -398,20 +492,23 @@ h1 {
   margin: 0.75rem 0; 
   color: #4b5563;
   line-height: 1.6;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 
 /* Responsive improvements */
+@media (max-width: 1024px) {
+  .container {
+    padding: 1.5rem 2rem 3rem;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1.5rem;
   }
   
-  h1 {
-    font-size: 2rem;
-  }
-  
   .drop-zone {
-    padding: 2.5rem 1.5rem;
+    padding: 2rem 1.5rem;
   }
   
   .preview-container {
@@ -428,6 +525,38 @@ h1 {
   
   .detect-btn {
     padding: 1rem 2rem;
-    font-size: 1rem;
+    width: 100%;
+  }
+
+  .diagnosis-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .confidence-badge {
+    align-self: flex-end;
+  }
+
+  .details-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .culture-diseases {
+    padding: 1.5rem;
+  }
+
+  .disease-card {
+    padding: 1.25rem;
+    min-height: auto;
+  }
+
+  .main-result {
+    padding: 1.5rem;
   }
 }

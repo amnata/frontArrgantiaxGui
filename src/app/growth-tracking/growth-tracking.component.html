@@ -6,52 +6,6 @@
   <h1>📈 Suivi de Croissance</h1>
   <p class="subtitle">Monitoring et analyse de l'évolution de vos cultures</p>
 
-  <!-- Prédictions IA -->
-  <div class="predictions-panel" *ngIf="showPredictions && predictions">
-    <h3>🎯 Prédictions IA</h3>
-    <div class="predictions-grid">
-      <div class="prediction-card">
-        <div class="prediction-icon">📏</div>
-        <div class="prediction-value">{{ (predictions.predictions?.predicted_height ?? 0)?.toFixed(1) }} cm</div>
-        <div class="prediction-label">Hauteur Prédite</div>
-      </div>
-      
-      <div class="prediction-card">
-        <div class="prediction-icon">❤️</div>
-        <div class="prediction-value">{{ ((predictions.predictions?.health_score ?? 0) * 100)?.toFixed(0) }}%</div>
-        <div class="prediction-label">Score Santé</div>
-      </div>
-      
-      <div class="prediction-card">
-        <div class="prediction-icon">📈</div>
-        <div class="prediction-value">{{ (predictions.predictions?.growth_rate ?? 0)?.toFixed(1) }} cm/j</div>
-        <div class="prediction-label">Taux Croissance</div>
-      </div>
-
-      <div class="prediction-card">
-        <div class="prediction-icon">🍃</div>
-        <div class="prediction-value">{{ (predictions.predictions?.predicted_chlorophyll ?? 0)?.toFixed(1) }} SPAD</div>
-        <div class="prediction-label">Chlorophylle Prédite</div>
-      </div>
-    </div>
-
-    <!-- Recommandations IA -->
-    <div class="recommendations" *ngIf="predictions.recommendations && predictions.recommendations.length > 0">
-      <h4>💡 Recommandations Intelligentes</h4>
-      <ul>
-        <li *ngFor="let rec of predictions.recommendations">{{ rec }}</li>
-      </ul>
-    </div>
-
-    <div class="model-info" *ngIf="predictions.predictions?.model_used">
-      <small>Modèle utilisé: {{ predictions.predictions.model_used }}</small>
-    </div>
-
-    <button class="close-predictions" (click)="showPredictions = false">
-      ✕ Fermer
-    </button>
-  </div>
-
   <!-- Add Measurement -->
   <div class="add-measurement">
     <h3>➕ Ajouter une Mesure</h3>
@@ -248,22 +202,6 @@
           🎯 Obtenir des Prédictions
         </button>
       </div>
-
-      <!-- Prédictions par plante spécifique -->
-      <div class="filter-group">
-        <label>Ou par plante spécifique:</label>
-        <select [(ngModel)]="selectedPlantForPrediction" class="form-control">
-          <option value="0">Choisir une plante...</option>
-          <option *ngFor="let plant of plants" [value]="plant.id">
-            {{ plant.name }} ({{ plant.cropType }})
-          </option>
-        </select>
-        
-        <button class="predict-btn" (click)="getPredictions(selectedPlantForPrediction)" 
-                [disabled]="!selectedPlantForPrediction">
-          🎯 Prédictions Plante
-        </button>
-      </div>
     </div>
 
     <div class="table-wrapper">
@@ -302,6 +240,53 @@
         </tbody>
       </table>
     </div>
+  </div>
+
+  <!-- Prédictions IA -->
+  <div class="predictions-panel" *ngIf="showPredictions && predictions">
+    <h3>🎯 Prédictions IA</h3>
+    <div class="predictions-grid">
+      <div class="prediction-card">
+        <div class="prediction-icon">📏</div>
+        <!-- <div class="prediction-value">{{ (predictions.predictions?.predicted_height ?? 0)?.toFixed(1) }} cm</div>Prédictions IA -->
+        <div class="prediction-value">{{ displayPrediction.predicted_height.toFixed(1) }} cm</div>
+        <div class="prediction-label">Hauteur Prédite</div>
+      </div>
+      
+      <div class="prediction-card">
+        <div class="prediction-icon">❤️</div>
+        <div class="prediction-value">{{ ((predictions.predictions?.health_score ?? 0) * 100)?.toFixed(0) }}</div>
+        <div class="prediction-label">Score Santé</div>
+      </div>
+      
+      <div class="prediction-card">
+        <div class="prediction-icon">📈</div>
+        <div class="prediction-value">{{ (predictions.predictions?.growth_rate ?? 0)?.toFixed(1) }} cm/j</div>
+        <div class="prediction-label">Taux Croissance</div>
+      </div>
+
+      <div class="prediction-card">
+        <div class="prediction-icon">🍃</div>
+        <div class="prediction-value">{{ (predictions.predictions?.predicted_chlorophyll ?? 0)?.toFixed(1) }} SPAD</div>
+        <div class="prediction-label">Chlorophylle Prédite</div>
+      </div>
+    </div>
+
+    <!-- Recommandations IA -->
+    <div class="recommendations" *ngIf="predictions.recommendations && predictions.recommendations.length > 0">
+      <h4>💡 Recommandations Intelligentes</h4>
+      <ul>
+        <li *ngFor="let rec of predictions.recommendations">{{ rec }}</li>
+      </ul>
+    </div>
+
+    <div class="model-info" *ngIf="predictions.predictions?.model_used">
+      <small>Modèle utilisé: {{ predictions.predictions.model_used }}</small>
+    </div>
+
+    <button class="close-predictions" (click)="showPredictions = false">
+      ✕ Fermer
+    </button>
   </div>
 
   <!-- Empty State -->
