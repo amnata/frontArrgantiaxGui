@@ -5,7 +5,9 @@ const config: CapacitorConfig = {
   appName: 'ArrGantiaxGui',
   webDir: 'dist/front-arrgantiax-gui/browser',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    url: 'http://10.160.0.186:4200',  
+    cleartext: true
   }
 };
 
