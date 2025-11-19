@@ -10,6 +10,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SplashComponent } from './splash/splash.component';
 import { AuthGuard } from './services/auth.guard.service';
 import { LogoutComponent } from './logout/logout.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 export const routes: Routes = [
   { path: '', component: SplashComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'detection', component: DiseaseDetectionComponent, canActivate: [AuthGuard] },
   { path: 'classification', component: CropClassificationComponent , canActivate: [AuthGuard] },
   { path: 'tracking', component: GrowthTrackingComponent, canActivate: [AuthGuard] },
+  { path: 'chatbot', component: ChatbotComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/home' }
 ];
 

@@ -1,0 +1,40 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+interface ChatResponse {
+  message: string;
+  timestamp: Date;
+  type: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ChatService {
+  private apiUrl = 'http://localhost:8080/api/chat';
+
+  constructor(private http: HttpClient) {}
+
+  sendMessage(message: string): Observable<ChatResponse> {
+    return this.http.post<ChatResponse>(`${this.apiUrl}/send`, {
+      message: message,
+      timestamp: new Date()
+    });
+  }
+
+  requestVoiceAssistance(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/voice-assistance`, {});
+  }
+
+  getHelp(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/help`);
+  }
+
+  reportProblem(description: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/report-problem`, {
+      description: description,
+      timestamp: new Date()
+    });
+  }
+}

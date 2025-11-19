@@ -248,26 +248,25 @@
     <div class="predictions-grid">
       <div class="prediction-card">
         <div class="prediction-icon">📏</div>
-        <!-- <div class="prediction-value">{{ (predictions.predictions?.predicted_height ?? 0)?.toFixed(1) }} cm</div>Prédictions IA -->
         <div class="prediction-value">{{ displayPrediction.predicted_height.toFixed(1) }} cm</div>
         <div class="prediction-label">Hauteur Prédite</div>
       </div>
       
       <div class="prediction-card">
         <div class="prediction-icon">❤️</div>
-        <div class="prediction-value">{{ ((predictions.predictions?.health_score ?? 0) * 100)?.toFixed(0) }}</div>
+        <div class="prediction-value">{{ (predictions.predictions.health_score * 100).toFixed(0) }}</div>
         <div class="prediction-label">Score Santé</div>
       </div>
       
       <div class="prediction-card">
         <div class="prediction-icon">📈</div>
-        <div class="prediction-value">{{ (predictions.predictions?.growth_rate ?? 0)?.toFixed(1) }} cm/j</div>
+        <div class="prediction-value">{{ predictions.predictions.growth_rate.toFixed(1) }} cm/j</div>
         <div class="prediction-label">Taux Croissance</div>
       </div>
 
       <div class="prediction-card">
         <div class="prediction-icon">🍃</div>
-        <div class="prediction-value">{{ (predictions.predictions?.predicted_chlorophyll ?? 0)?.toFixed(1) }} SPAD</div>
+        <div class="prediction-value">{{ (predictions.predictions.health_score * 100).toFixed(0) }} SPAD</div>
         <div class="prediction-label">Chlorophylle Prédite</div>
       </div>
     </div>
