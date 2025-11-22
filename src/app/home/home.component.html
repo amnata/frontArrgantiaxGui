@@ -9,23 +9,34 @@
       <div class="header-top">
         <h1 class="greeting">Bonjour {{userName}}</h1>
 
-       <div class="header-actions">
-  <button class="icon-button" (click)="navigateTologout()">➡️</button>
+        <!-- Bouton Paramètres -->
+        <button (click)="openSettings()">
+          <img src="../../assets/parametre.png" alt="Setting" class="settingImg">
+        </button>
 
-  <div class="notif-weather-wrapper">
-    <div class="weather-today-header" *ngIf="todayWeather">
-      <span>🌡️ {{ todayWeather.main.temp }}°C</span>
-      <span>💧 {{ todayWeather.main.humidity }}%</span>
-      <span>🌤️ {{ todayWeather.weather[0].description }}</span>
-    </div>
+        <!-- Menu overlay -->
+        <app-setting
+          *ngIf="showSettings" 
+          (close)="closeSettings()">
+        </app-setting>
 
-    <button class="notif-icon" (click)="goToAlerts()">
-      <span class="notif-emoji">🔔</span>
-      <span *ngIf="unreadCount > 0" class="notif-badge">{{ unreadCount }}</span>
-    </button>
-  </div>
-</div>
+        <!-- Actions notification + météo -->
+        <div class="header-actions">
+          <button class="icon-button" (click)="navigateTologout()">➡️</button>
 
+          <div class="notif-weather-wrapper">
+            <div class="weather-today-header" *ngIf="todayWeather">
+              <span>🌡️ {{ todayWeather.main.temp }}°C</span>
+              <span>💧 {{ todayWeather.main.humidity }}%</span>
+              <span>🌤️ {{ todayWeather.weather[0].description }}</span>
+            </div>
+
+            <button class="notif-icon" (click)="goToAlerts()">
+              <span class="notif-emoji">🔔</span>
+              <span *ngIf="unreadCount > 0" class="notif-badge">{{ unreadCount }}</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- BANNIERE D'ALERTE -->
@@ -53,7 +64,6 @@
     <section class="section">
       <h2 class="section-title">Fonctionnalités</h2>
       <div class="features-grid">
-        
         <button class="feature-card feature-detection" (click)="navigateToDetection()">
           <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>

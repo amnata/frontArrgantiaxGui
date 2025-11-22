@@ -1,0 +1,221 @@
+  <!-- <button class="btn-cancel" (click)="goHome()">
+  <img src="assets/icons/back.svg" alt="Retour" class="icon" />
+</button>
+
+<div class="page-container">
+  <h1>ℹ️ À propos d ArrGantiaxGui</h1>
+
+  <div class="card">
+    <h2>🌿 Notre Mission</h2>
+    <p>
+      ArrGantiaxGui a été créée pour aider les agriculteurs à diagnostiquer les maladies,
+      améliorer les rendements agricoles et moderniser les pratiques grâce à l'IA.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🤝 Notre Engagement</h2>
+    <p>
+      Nous mettons l’accent sur des technologies simples, accessibles et fiables
+      afin de soutenir le secteur agricole africain.
+    </p>
+  </div>
+
+</div> -->
+
+
+<div class="about-container">
+  <!-- Header avec bouton retour -->
+  <header class="about-header">
+    <button class="btn-back" (click)="goHome()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+      <span>Retour</span>
+    </button>
+    
+    <div class="header-content">
+      <div class="header-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4"/>
+          <path d="M12 8h.01"/>
+        </svg>
+      </div>
+      <h1>À propos d'ArrGantiaxGui</h1>
+      <p class="subtitle">Innovation au service de l'agriculture</p>
+    </div>
+  </header>
+
+  <!-- Section hero -->
+  <div class="hero-section">
+    <div class="hero-card">
+      <div class="hero-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M2 12h20"/>
+          <circle cx="12" cy="12" r="9"/>
+        </svg>
+      </div>
+      <h2>ArrGantiaxGui</h2>
+      <p class="hero-tagline">Révolutionner l'agriculture avec l'intelligence artificielle</p>
+    </div>
+  </div>
+
+  <!-- Grille de contenu -->
+  <div class="content-grid">
+    <div class="mission-card main-card">
+      <div class="card-header">
+        <div class="card-icon mission">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" x2="12" y1="19" y2="22"/>
+          </svg>
+        </div>
+        <h2>Notre Mission</h2>
+      </div>
+      <div class="card-content">
+        <p>ArrGantiaxGui a été créée pour aider les agriculteurs à diagnostiquer les maladies, améliorer les rendements agricoles et moderniser les pratiques grâce à l'intelligence artificielle.</p>
+        <div class="mission-stats">
+          <div class="stat-item">
+            <div class="stat-number">95%</div>
+            <div class="stat-label">Précision IA</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Disponibilité</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Analyses</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="engagement-card main-card">
+      <div class="card-header">
+        <div class="card-icon engagement">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h2>Notre Engagement</h2>
+      </div>
+      <div class="card-content">
+        <p>Nous mettons l'accent sur des technologies simples, accessibles et fiables afin de soutenir le secteur agricole africain.</p>
+        <div class="engagement-points">
+          <div class="point-item">
+            <div class="point-icon">✓</div>
+            <span>Technologie accessible à tous</span>
+          </div>
+          <div class="point-item">
+            <div class="point-icon">✓</div>
+            <span>Support multilingue</span>
+          </div>
+          <div class="point-item">
+            <div class="point-icon">✓</div>
+            <span>Formation continue</span>
+          </div>
+          <div class="point-item">
+            <div class="point-icon">✓</div>
+            <span>Innovation durable</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="values-card main-card">
+      <div class="card-header">
+        <div class="card-icon values">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h2>Nos Valeurs</h2>
+      </div>
+      <div class="card-content">
+        <div class="values-grid">
+          <div class="value-badge">
+            <span class="badge-emoji">🌱</span>
+            <span>Durabilité</span>
+          </div>
+          <div class="value-badge">
+            <span class="badge-emoji">💡</span>
+            <span>Innovation</span>
+          </div>
+          <div class="value-badge">
+            <span class="badge-emoji">🤝</span>
+            <span>Collaboration</span>
+          </div>
+          <div class="value-badge">
+            <span class="badge-emoji">🎯</span>
+            <span>Excellence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="impact-card main-card">
+      <div class="card-header">
+        <div class="card-icon impact">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/>
+            <path d="m19 9-5 5-4-4-3 3"/>
+          </svg>
+        </div>
+        <h2>Notre Impact</h2>
+      </div>
+      <div class="card-content">
+        <p>ArrGantiaxGui contribue à transformer l'agriculture africaine en offrant des outils modernes qui permettent aux agriculteurs de prendre des décisions éclairées et d'optimiser leurs récoltes.</p>
+        <div class="impact-highlights">
+          <div class="highlight-item">
+            <div class="highlight-icon">🌍</div>
+            <div class="highlight-text">
+              <strong>Portée régionale</strong>
+              <span>Support adapté aux besoins locaux</span>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">📈</div>
+            <div class="highlight-text">
+              <strong>Amélioration des rendements</strong>
+              <span>Diagnostics précis et rapides</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer avec contact -->
+  <div class="footer-section">
+    <div class="footer-card">
+      <h3>Rejoignez-nous dans cette mission</h3>
+      <p>Ensemble, construisons l'avenir de l'agriculture intelligente</p>
+      <div class="social-links">
+        <div class="social-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <div class="social-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+          </svg>
+        </div>
+        <div class="social-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

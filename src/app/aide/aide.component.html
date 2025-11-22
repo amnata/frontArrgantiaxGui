@@ -1,0 +1,139 @@
+  <!-- <button class="btn-cancel" (click)="goHome()">
+  <img src="assets/icons/back.svg" alt="Retour" class="icon" />
+</button>
+<div class="page-container">
+  <h1>❓ Aide & Support</h1>
+
+  <div class="card">
+    <h2>🔍 Détection de maladies</h2>
+    <p>
+      Téléchargez une image de votre plante. L’IA analysera la maladie,
+      la sévérité et vous donnera des recommandations adaptées.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🌱 Classification des cultures</h2>
+    <p>
+      Prenez une photo de votre culture. L'application identifie automatiquement
+      la plante et les variétés possibles.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>📈 Suivi de croissance</h2>
+    <p>
+      Ajoutez vos plantes et suivez leur croissance, santé et évolution
+      à travers le temps.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🤖 Chatbot Assistance</h2>
+    <p>
+      Posez vos questions agricoles et obtenez une réponse instantanée grâce à l'assistance ArrGantiaxGui.
+    </p>
+  </div>
+</div> -->
+
+
+<div class="aide-container">
+  <!-- Header avec bouton retour -->
+  <header class="aide-header">
+    <button class="btn-back" (click)="goHome()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+      <span>Retour</span>
+    </button>
+    
+    <div class="header-content">
+      <div class="header-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <path d="M12 17h.01"/>
+        </svg>
+      </div>
+      <h1>Aide & Support</h1>
+      <p class="subtitle">Découvrez comment utiliser toutes les fonctionnalités</p>
+    </div>
+  </header>
+
+  <!-- Grille de cartes -->
+  <div class="cards-grid">
+    <div class="feature-card">
+      <div class="card-icon detection">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+      </div>
+      <div class="card-content">
+        <h2>Détection de maladies</h2>
+        <p>Téléchargez une image de votre plante. L'IA analysera la maladie, la sévérité et vous donnera des recommandations adaptées.</p>
+        <div class="card-badge">IA Avancée</div>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="card-icon classification">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M2 12h20"/>
+          <path d="m5 8 7 7 7-7"/>
+        </svg>
+      </div>
+      <div class="card-content">
+        <h2>Classification des cultures</h2>
+        <p>Prenez une photo de votre culture. L'application identifie automatiquement la plante et les variétés possibles.</p>
+        <div class="card-badge">Reconnaissance instantanée</div>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="card-icon suivi">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/>
+          <path d="m19 9-5 5-4-4-3 3"/>
+        </svg>
+      </div>
+      <div class="card-content">
+        <h2>Suivi de croissance</h2>
+        <p>Ajoutez vos plantes et suivez leur croissance, santé et évolution à travers le temps.</p>
+        <div class="card-badge">Historique complet</div>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="card-icon chatbot">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div class="card-content">
+        <h2>Chatbot Assistance</h2>
+        <p>Posez vos questions agricoles et obtenez une réponse instantanée grâce à l'assistance ArrGantiaxGui.</p>
+        <div class="card-badge">24/7 Disponible</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section FAQ rapide -->
+  <div class="faq-section">
+    <h3>Questions fréquentes</h3>
+    <div class="faq-list">
+      <div class="faq-item">
+        <span class="faq-question">Comment améliorer la précision des détections ?</span>
+        <span class="faq-arrow">→</span>
+      </div>
+      <div class="faq-item">
+        <span class="faq-question">Quels formats d'images sont supportés ?</span>
+        <span class="faq-arrow">→</span>
+      </div>
+      <div class="faq-item">
+        <span class="faq-question">Puis-je utiliser l'app hors ligne ?</span>
+        <span class="faq-arrow">→</span>
+      </div>
+    </div>
+  </div>
+</div>
