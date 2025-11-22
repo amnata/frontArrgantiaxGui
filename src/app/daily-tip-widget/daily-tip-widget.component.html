@@ -1,0 +1,11 @@
+<div class="tip-widget">
+  <div class="header">
+    <strong>🌿 Conseil du jour</strong>
+    <button class="btn-refresh" (click)="refresh()">🔄</button>
+  </div>
+  <div class="body">
+    <h4>{{ tip.title }}</h4>
+    <p>{{ tip.message }}</p>
+  </div>
+  <a routerLink="/conseils" class="more"></a>
+</div>

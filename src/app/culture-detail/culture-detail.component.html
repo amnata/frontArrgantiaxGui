@@ -1,0 +1,102 @@
+<div class="culture-detail-container">
+  <!-- Header avec bouton retour -->
+  <header class="detail-header">
+    <button class="back-button" (click)="goBack()">
+      <span class="back-arrow">←</span> Retour à l'accueil
+    </button>
+    <div class="header-title">
+      <h1>Détails de la Culture</h1>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="detail-content" *ngIf="plant">
+    <!-- En-tête de la plante -->
+    <section class="plant-hero">
+      <div class="plant-emoji-section">
+        <span class="plant-emoji">{{ plant.emoji }}</span>
+      </div>
+      <div class="plant-basic-info">
+        <h2 class="plant-name">{{ plant.name }}</h2>
+        <p class="plant-type-badge">{{ plant.type }}</p>
+        <p class="plant-family">Famille : {{ plant.famille }}</p>
+        <p class="plant-short-desc">{{ plant.description }}</p>
+      </div>
+    </section>
+
+    <!-- Description complète -->
+    <section class="info-section">
+      <h3 class="section-title">📖 Description Complète</h3>
+      <p class="plant-full-desc">{{ plant.fullDescription }}</p>
+    </section>
+
+    <!-- Informations de culture -->
+    <div class="info-grid">
+      <!-- Périodes -->
+      <section class="info-card">
+        <h4 class="info-card-title">📅 Calendrier</h4>
+        <div class="info-item">
+          <span class="info-label">Période de plantation :</span>
+          <span class="info-value">{{ plant.periodePlantation }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Période de récolte :</span>
+          <span class="info-value">{{ plant.periodeRecolte }}</span>
+        </div>
+      </section>
+
+      <!-- Conditions de croissance -->
+      <section class="info-card">
+        <h4 class="info-card-title">🌱 Environnement</h4>
+        <div class="info-item">
+          <span class="info-label">Type de sol :</span>
+          <span class="info-value">{{ plant.sol }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Climat idéal :</span>
+          <span class="info-value">{{ plant.climat }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Besoins en eau :</span>
+          <span class="info-value">{{ plant.arrosage }}</span>
+        </div>
+      </section>
+
+      <!-- Entretien et santé -->
+      <section class="info-card">
+        <h4 class="info-card-title">🔧 Entretien & Santé</h4>
+        <div class="info-item">
+          <span class="info-label">Entretien requis :</span>
+          <span class="info-value">{{ plant.entretien }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Maladies courantes :</span>
+          <span class="info-value">{{ plant.maladies }}</span>
+        </div>
+      </section>
+
+      <!-- Avantages -->
+      <section class="info-card">
+        <h4 class="info-card-title">⭐ Avantages</h4>
+        <p class="advantages-text">{{ plant.avantages }}</p>
+      </section>
+    </div>
+
+    <!-- Conseils de culture -->
+    <section class="tips-section">
+      <h3 class="section-title">💡 Conseils de Culture Pratiques</h3>
+      <div class="tips-list">
+        <div *ngFor="let conseil of plant.conseils" class="tip-item">
+          <span class="tip-bullet">•</span>
+          <span class="tip-text">{{ conseil }}</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Loading state -->
+  <div *ngIf="!plant" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Chargement des détails de la culture...</p>
+  </div>
+</div>

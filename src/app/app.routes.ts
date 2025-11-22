@@ -11,6 +11,8 @@ import { SplashComponent } from './splash/splash.component';
 import { AuthGuard } from './services/auth.guard.service';
 import { LogoutComponent } from './logout/logout.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
+import { CultureDetailComponent } from './culture-detail/culture-detail.component'; // ← Ajoute cet import
+import { AlertsPageComponent } from './alerts-page/alerts-page.component';
 
 export const routes: Routes = [
   { path: '', component: SplashComponent },
@@ -20,11 +22,18 @@ export const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'home', component: HomeComponent },
   { path: 'detection', component: DiseaseDetectionComponent, canActivate: [AuthGuard] },
-  { path: 'classification', component: CropClassificationComponent , canActivate: [AuthGuard] },
+  { path: 'classification', component: CropClassificationComponent, canActivate: [AuthGuard] },
   { path: 'tracking', component: GrowthTrackingComponent, canActivate: [AuthGuard] },
   { path: 'chatbot', component: ChatbotComponent, canActivate: [AuthGuard] },
+  { path: 'culture/:id', component: CultureDetailComponent, canActivate: [AuthGuard] },
+
+  // 👉 Déplace ici
+  { path: 'alerts', component: AlertsPageComponent },
+
+  // 👉 Toujours en dernier
   { path: '**', redirectTo: '/home' }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

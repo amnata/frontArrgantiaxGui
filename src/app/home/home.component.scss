@@ -29,6 +29,7 @@
 }
 
 /* ===== HEADER SECTION ===== */
+/* ===== HEADER SECTION ===== */
 .header-section {
   position: relative;
   height: 35vh;
@@ -40,6 +41,143 @@
   box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
   flex-shrink: 0;
 }
+
+/* Motif de fond pour le header */
+.header-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.15) 35px, rgba(255,255,255,.15) 70px),
+    repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,.15) 35px, rgba(255,255,255,.15) 70px);
+  opacity: 0.6;
+  animation: backgroundScroll 20s linear infinite;
+}
+
+@keyframes backgroundScroll {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(70px, 70px); }
+}
+
+.header-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(16, 185, 129, 0.2) 100%);
+}
+
+.header-content {
+  position: relative;
+  z-index: 10;
+  padding: 2rem 2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top du header */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.greeting {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  text-shadow: none;
+  letter-spacing: -0.5px;
+}
+
+/* Conteneur pour météo + notification */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+/* Carte météo compacte */
+.weather-today-header {
+  background: linear-gradient(135deg, #a8e6cf 0%, #4CAF50 100%);
+  border-radius: 8px;
+  padding: 6px 10px;
+  min-width: 140px;
+  font-size: 0.8rem;
+  color: #fff;
+  text-align: right;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: center;
+}
+
+.weather-today-header p {
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+/* Bouton de notification */
+.icon-button,
+.notif-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #10b981;
+  font-size: 1.3rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  position: relative;
+}
+
+.icon-button:hover,
+.notif-icon:hover {
+  transform: scale(1.15) rotate(5deg);
+  background: rgba(255, 255, 255, 1);
+  border-color: #10b981;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+.icon-button svg,
+.notif-emoji {
+  stroke: #10b981;
+  filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.2));
+}
+
+.notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 
 /* Motif de fond pour le header */
 .header-section::before {
@@ -137,6 +275,7 @@
 .search-bar {
   position: relative;
   animation: slideUp 0.5s ease 0.2s both;
+  padding-top: 30px;
 }
 
 @keyframes slideUp {
@@ -446,6 +585,15 @@
   font-size: clamp(0.8rem, 1.5vw, 0.85rem);
   line-height: 1.5;
   margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.plant-description1 {
+  color: #059669;
+  font-size: clamp(0.8rem, 1.5vw, 0.85rem);
+  line-height: 1.5;
+  margin: 0;
+  padding-left: 4px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
@@ -799,4 +947,68 @@
 .plant-card:hover::after,
 .plant-card-large:hover::after {
   transform: translateX(100%);
+}
+
+
+.notif-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* espace entre l'icône et le texte */
+ /* couleur du bouton */
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background 0.2s;
+  margin-left: 900px;
+  margin-bottom: 5px;
+}
+
+.notif-icon:hover {
+  background: #e0e0e0;
+}
+
+.notif-emoji {
+  font-size: 20px; /* taille de l’icône 🔔 */
+}
+
+.notif-text {
+  font-size: 16px;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+
+.weather-today-header {
+  position: absolute;   /* pour être au-dessus du contenu */
+  top: 15px;
+  right: 60px;          /* espace à gauche du bouton notif */
+  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%); /* ton vert */
+  border-radius: 8px;
+  padding: 6px 10px;
+  width: 160px;         /* compact */
+  font-size: 0.8rem;
+  color: #fff;
+  text-align: right;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+
+  p {
+    margin: 2px 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+  }
 }

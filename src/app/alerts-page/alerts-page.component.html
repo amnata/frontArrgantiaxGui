@@ -1,0 +1,29 @@
+<div class="alerts-page">
+  <div class="header">
+    <h2>📢 Historique des alertes météo</h2>
+    <div class="controls">
+      <button (click)="clearAll()" class="btn-clear">Tout supprimer</button>
+      <a routerLink="/home" class="btn-back">Retour</a>
+    </div>
+  </div>
+
+  <div *ngIf="alerts.length === 0" class="empty">
+    <p>Aucune alerte pour l'instant. Les alertes apparaîtront ici lorsque la météo déclenchera une règle.</p>
+  </div>
+
+  <ul class="alerts-list">
+    <li *ngFor="let a of alerts" [class.unread]="!a.read">
+      <div class="left">
+        <div class="title">{{ a.title }}</div>
+        <div class="msg">{{ a.message }}</div>
+       <div class="meta" *ngIf="a.timestamp">{{ a.timestamp | date:'short' }}</div>
+       
+
+      </div>
+      <div class="right">
+        <button (click)="markRead(a)">Marquer lu</button>
+        <button (click)="remove(a)" class="danger">Supprimer</button>
+      </div>
+    </li>
+  </ul>
+</div>

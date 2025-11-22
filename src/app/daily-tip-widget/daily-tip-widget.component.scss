@@ -1,0 +1,12 @@
+.tip-widget{
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  padding:14px;
+  border-radius:12px;
+  border:1px solid rgba(16,185,129,0.08);
+  box-shadow:0 8px 20px rgba(16,185,129,0.04);
+}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.btn-refresh{background:#f3f4f6;border:none;padding:6px 10px;border-radius:8px;cursor:pointer}
+.body h4{margin:0;color:#047857}
+.more{display:inline-block;margin-top:8px;color:#10b981;text-decoration:none;font-weight:600}

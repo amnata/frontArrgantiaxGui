@@ -1,0 +1,12 @@
+<div class="alert-banner" *ngIf="top">
+  <div class="left">
+    <strong>⚠️ Alerte météo :</strong>
+    <span class="title">{{ top?.title }}</span>
+  </div>
+
+  <div class="right">
+    <a routerLink="/alerts" class="see">Voir ({{ unread }})</a>
+  </div>
+
+  <div class="pulse-dot" [class.active]="pulse" *ngIf="unread > 0"></div>
+</div>
