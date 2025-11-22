@@ -39,8 +39,15 @@ export class GrowthService {
 
   constructor(private http: HttpClient) {}
 
+ 
+  // Récupérer TOUTES les mesures de l'utilisateur
   getAllGrowthRecords(): Observable<GrowthRecord[]> {
-    return this.http.get<GrowthRecord[]>(`${this.apiUrl}/records`);
+    return this.http.get<GrowthRecord[]>(`${this.apiUrl}/all`);
+  }
+  
+  // Récupérer les mesures d'une plante spécifique
+  getGrowthRecordsByPlant(plantId: number): Observable<GrowthRecord[]> {
+    return this.http.get<GrowthRecord[]>(`${this.apiUrl}/plant/${plantId}`);
   }
 
   createGrowthRecord(record: GrowthRecord): Observable<GrowthRecord> {
@@ -55,7 +62,10 @@ export class GrowthService {
     return this.http.get<{ai_analysis: GrowthPredictionResponse}>(`${this.apiUrl}/stats/${plantId}`);
   }
 
-  deleteGrowthRecord(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/records/${id}`);
-  }
+  // growth.service.ts
+deleteGrowthRecord(id: number): Observable<any> {
+  console.log('🗑️ Suppression du record ID:', id);
+  return this.http.delete(`${this.apiUrl}/records/${id}`).pipe(
+  );
+}
 }

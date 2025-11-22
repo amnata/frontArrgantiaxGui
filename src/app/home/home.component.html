@@ -7,6 +7,19 @@
 
       <!-- Top du header avec salutation et icônes -->
       <div class="header-top">
+        <h1 class="greeting">Bonjour </h1>
+        <button (click)="openSettings()">
+          <img src="../../assets/parametre.png" alt="Setting" class="settingImg">
+        </button>
+
+        <!-- Menu overlay -->
+        <app-setting
+          *ngIf="showSettings" 
+          (close)="closeSettings()">
+        </app-setting>
+      </div>
+    </div>
+      
         <h1 class="greeting">Bonjour {{userName}}</h1>
 
        <div class="header-actions">
@@ -41,6 +54,7 @@
           <path d="m21 21-4.35-4.35"></path>
         </svg>
         <input type="text" placeholder="Search" class="search-input" />
+      </div>
       </div>
 
     </div>

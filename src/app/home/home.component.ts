@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatbotComponent } from '../chatbot/chatbot.component';
+import { SettingComponent } from '../setting/setting.component';
 import { AlertService } from '../services/alert.service';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { DailyTipWidgetComponent } from '../daily-tip-widget/daily-tip-widget.component';
@@ -11,11 +12,8 @@ import { WeatherNotifService } from '../services/weather-notif.service';
 
 @Component({
   selector: 'app-home',
- imports: [
-  CommonModule,
-  ChatbotComponent, DailyTipWidgetComponent,  AlertBannerComponent
-
-],
+  imports: [CommonModule,ChatbotComponent,SettingComponent,DailyTipWidgetComponent,AlertBannerComponent],
+ 
 
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
@@ -26,6 +24,7 @@ import { WeatherNotifService } from '../services/weather-notif.service';
 export class HomeComponent implements OnInit {
   isAuthenticated = false;
   showLoginModal = false;
+    showSettings = false;
   userName = 'Ngor';
     unreadCount = 0;
 
@@ -120,6 +119,18 @@ const lon = -16.9241;
   
   navigateTologout() {
     this.router.navigate(['/logout']);
+  }
+
+  openSettings() {
+    this.showSettings = true;
+    // Empêcher le scroll du body quand le menu est ouvert
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeSettings() {
+    this.showSettings = false;
+    // Réactiver le scroll
+    document.body.style.overflow = 'auto';
   }
 
 
