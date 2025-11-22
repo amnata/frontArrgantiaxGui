@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CultureDetailComponent } from './culture-detail.component';
 
 describe('CultureDetailComponent', () => {
@@ -9,8 +8,7 @@ describe('CultureDetailComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CultureDetailComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CultureDetailComponent);
     component = fixture.componentInstance;

@@ -12,6 +12,7 @@ import { WeatherNotifService } from '../services/weather-notif.service';
 
 @Component({
   selector: 'app-home',
+  
   imports: [CommonModule,ChatbotComponent,SettingComponent,DailyTipWidgetComponent,AlertBannerComponent],
  
 
@@ -120,6 +121,11 @@ const lon = -16.9241;
   navigateTologout() {
     this.router.navigate(['/logout']);
   }
+
+ 
+
+
+ 
 
   openSettings() {
     this.showSettings = true;
