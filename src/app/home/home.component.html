@@ -8,12 +8,17 @@
       <!-- Top du header avec salutation et icônes -->
       <div class="header-top">
         <h1 class="greeting">Bonjour </h1>
-        <div class="header-actions">
-          <button class="icon-button " (click)="navigateTologout()" aria-label="Notifications">
-            <span>➡️</span>
-          </button>
-        </div>
+        <button (click)="openSettings()">
+          <img src="../../assets/parametre.png" alt="Setting" class="settingImg">
+        </button>
+
+        <!-- Menu overlay -->
+        <app-setting
+          *ngIf="showSettings" 
+          (close)="closeSettings()">
+        </app-setting>
       </div>
+    </div>
       
       <!-- Barre de recherche -->
       <div class="search-bar">
@@ -23,7 +28,6 @@
         </svg>
         <input type="text" placeholder="Search" class="search-input" />
       </div>
-    </div>
   </header>
 
   <!-- ===== CONTENU PRINCIPAL ===== -->

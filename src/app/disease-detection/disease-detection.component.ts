@@ -83,7 +83,7 @@ export class DiseaseDetectionComponent {
 
   formatDiseaseResponse(result: any): any {
   // On prend d'abord le nom de la maladie réel
-  const diseaseName = result.disease_detected || result.class_label || 'Maladie inconnue';
+  const diseaseName =  result.display_label || result.disease_detected || result.class_label || 'Maladie inconnue'
 
   return {
     disease: diseaseName,

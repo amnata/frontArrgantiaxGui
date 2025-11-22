@@ -62,30 +62,94 @@ export class GrowthTrackingComponent implements OnInit {
     { value: 'CRITIQUE', label: '🔴 Critique' }
   ];
 
- ngOnInit() {
+//  ngOnInit() {
+//   this.plantService.getAllPlants().subscribe({
+//     next: (plants: Plant[]) => {
+//       this.plants = plants;
+//       if (plants.length > 0) {
+//         this.newMeasurement.plantId = plants[0].id!;
+//         this.selectedPlantForPrediction = plants[0].id!;
+//       }
+
+//       // 👉 Charger les mesures maintenant que les plantes sont connues
+//       this.loadMeasurements();
+//     },
+//     error: () => {
+//       this.plants = [
+//         { id: 1, name: 'Arachide Test', cropType: 'ARACHIDE' },
+//         { id: 2, name: 'Oignon Test', cropType: 'OIGNON' },
+//         { id: 3, name: 'Riz Test', cropType: 'RIZ' }
+//       ];
+
+//       this.loadMeasurements();
+//     }
+//   });
+// }
+
+ngOnInit() {
+  console.log('🔄 Initialisation Growth Tracking');
+  
+  // ❌ SUPPRIMER COMPLÈTEMENT CETTE PARTIE
+  // const userId = localStorage.getItem('userId');
+  // const token = localStorage.getItem('token');
+  // if (!userId || !token) {
+  //   this.router.navigate(['/login']);
+  //   return;
+  // }
+
+  // ✅ GARDER SEULEMENT CECI
   this.plantService.getAllPlants().subscribe({
     next: (plants: Plant[]) => {
+      console.log('✅ Plantes chargées:', plants.length);
       this.plants = plants;
+      
       if (plants.length > 0) {
         this.newMeasurement.plantId = plants[0].id!;
         this.selectedPlantForPrediction = plants[0].id!;
       }
 
-      // 👉 Charger les mesures maintenant que les plantes sont connues
-      this.loadMeasurements();
+      this.loadMeasurementsFromBackend();
     },
-    error: () => {
+    error: (error) => {
+      console.error('❌ Erreur chargement plantes:', error);
       this.plants = [
         { id: 1, name: 'Arachide Test', cropType: 'ARACHIDE' },
         { id: 2, name: 'Oignon Test', cropType: 'OIGNON' },
         { id: 3, name: 'Riz Test', cropType: 'RIZ' }
       ];
-
-      this.loadMeasurements();
+      this.loadMeasurementsFromBackend();
     }
   });
 }
-
+// Nouvelle méthode pour charger depuis le backend
+loadMeasurementsFromBackend() {
+  console.log('📥 Chargement des mesures depuis le backend...');
+  
+  this.growthService.getAllGrowthRecords().subscribe({
+    next: (measurements: GrowthRecord[]) => {
+      console.log('✅ Mesures reçues du backend:', measurements.length);
+      this.measurements = measurements;
+      
+      // Sauvegarder en local APRÈS avoir reçu du backend
+      this.saveLocalMeasurements();
+    },
+    error: (error) => {
+      console.error('❌ Erreur chargement mesures backend:', error);
+      
+      // Fallback: charger depuis localStorage
+      console.log('🔄 Tentative de chargement depuis localStorage...');
+      const localMeasurements = this.getLocalMeasurements();
+      
+      if (localMeasurements.length > 0) {
+        console.log('✅ Mesures trouvées en local:', localMeasurements.length);
+        this.measurements = localMeasurements;
+      } else {
+        console.log('⚠️ Aucune mesure trouvée (ni backend ni local)');
+        this.measurements = [];
+      }
+    }
+  });
+}
 
   loadPlants() {
     this.plantService.getAllPlants().subscribe({
@@ -111,6 +175,7 @@ export class GrowthTrackingComponent implements OnInit {
     this.growthService.getAllGrowthRecords().subscribe({
       next: (measurements: GrowthRecord[]) => {
         this.measurements = measurements;
+        this.saveLocalMeasurements();  
       },
       error: (error) => {
         console.error('Erreur chargement mesures:', error);
@@ -153,6 +218,7 @@ export class GrowthTrackingComponent implements OnInit {
         this.predictions = response.prediction;
         this.showPredictions = true;
         this.loadMeasurements();
+        this.saveLocalMeasurements();  
         this.resetForm();
         this.isLoading = false;
       },
@@ -172,6 +238,7 @@ export class GrowthTrackingComponent implements OnInit {
               id: Date.now(),
               plant: this.plants.find(p => p.id === growthRecord.plantId)
             });
+            this.saveLocalMeasurements(); 
             this.resetForm();
             this.isLoading = false;
           }
@@ -329,24 +396,42 @@ export class GrowthTrackingComponent implements OnInit {
     };
   }
 
-  deleteMeasurement(index: number) {
-    const filtered = this.getFilteredMeasurements();
-    const measurement = filtered[index];
-    
-    if (measurement.id && measurement.id > 1000) {
-      this.growthService.deleteGrowthRecord(measurement.id).subscribe({
-        next: () => {
-          this.loadMeasurements();
-        },
-        error: (error) => {
-          console.error('Erreur suppression:', error);
-          this.measurements = this.measurements.filter(m => m !== measurement);
-        }
-      });
-    } else {
-      this.measurements = this.measurements.filter(m => m !== measurement);
-    }
+ deleteMeasurement(index: number) {
+  const filtered = this.getFilteredMeasurements();
+  const measurement = filtered[index];
+  
+  if (!measurement.id) {
+    console.warn('⚠️ Pas d\'ID pour cette mesure, suppression locale uniquement');
+    this.measurements = this.measurements.filter(m => m !== measurement);
+    this.saveLocalMeasurements();
+    return;
   }
+
+  console.log('🗑️ Suppression de la mesure ID:', measurement.id);
+  
+  if (confirm('Êtes-vous sûr de vouloir supprimer cette mesure ?')) {
+    this.growthService.deleteGrowthRecord(measurement.id).subscribe({
+      next: (response) => {
+        console.log('✅ Suppression réussie:', response);
+        // Recharger les mesures depuis le backend
+        this.loadMeasurementsFromBackend();
+      },
+      error: (error) => {
+        console.error('❌ Erreur suppression:', error);
+        if (error.status === 403) {
+          alert('Vous n\'êtes pas autorisé à supprimer cette mesure');
+        } else if (error.status === 404) {
+          alert('Mesure introuvable');
+          // Supprimer quand même localement
+          this.measurements = this.measurements.filter(m => m.id !== measurement.id);
+          this.saveLocalMeasurements();
+        } else {
+          alert('Erreur lors de la suppression: ' + (error.error?.message || error.message));
+        }
+      }
+    });
+  }
+}
 
 getFilteredMeasurements(): GrowthRecord[] {
   if (!this.filterCrop) return this.measurements;
@@ -357,20 +442,11 @@ getFilteredMeasurements(): GrowthRecord[] {
   });
 }
 
-
   // Nouvelle méthode: Obtenir les cultures disponibles depuis les plantes
   getAvailableCrops(): string[] {
     const crops = this.plants.map(plant => plant.cropType);
     return [...new Set(crops)];
   }
-
-  // getUniqueCrops(): string[] {
-  //   const crops = this.measurements.map(m => {
-  //     const plant = this.plants.find(p => p.id === m.plantId);
-  //     return plant ? plant.cropType : 'Inconnu';
-  //   });
-  //   return [...new Set(crops)];
-  // }
 
   getUniqueCrops(): string[] {
   return [...new Set(
@@ -379,7 +455,6 @@ getFilteredMeasurements(): GrowthRecord[] {
       .filter(crop => crop !== 'Inconnu')
   )];
 }
-
 
   // Nouvelle méthode: Obtenir le nom d'affichage des cultures
   getCropDisplayName(crop: string): string {
@@ -500,16 +575,78 @@ getFilteredMeasurements(): GrowthRecord[] {
     this.router.navigate(['/home']);
   }
 
-  private getLocalMeasurements(): GrowthRecord[] {
-    try {
-      const saved = localStorage.getItem('growthMeasurements');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
+  // private getLocalMeasurements(): GrowthRecord[] {
+  //   try {
+  //     const saved = localStorage.getItem('growthMeasurements');
+  //     return saved ? JSON.parse(saved) : [];
+  //   } catch {
+  //     return [];
+  //   }
+  // }
+
+private getLocalMeasurements(): GrowthRecord[] {
+  try {
+    const userId = localStorage.getItem('userId');
+    
+    if (!userId) {
+      console.warn('⚠️ Pas d\'userId en localStorage');
       return [];
     }
+    
+    const key = `growthMeasurements_${userId}`;
+    const saved = localStorage.getItem(key);
+    
+    if (!saved) {
+      console.log('ℹ️ Aucune mesure locale trouvée pour user', userId);
+      return [];
+    }
+    
+    const measurements = JSON.parse(saved);
+    console.log('✅ Mesures locales chargées:', measurements.length);
+    return measurements;
+    
+  } catch (error) {
+    console.error('❌ Erreur lecture localStorage:', error);
+    return [];
   }
+}
 
-  private saveLocalMeasurements() {
-    localStorage.setItem('growthMeasurements', JSON.stringify(this.measurements));
+private saveLocalMeasurements() {
+  try {
+    const userId = localStorage.getItem('userId');
+    
+    if (!userId) {
+      console.warn('⚠️ Impossible de sauvegarder: pas d\'userId');
+      return;
+    }
+    
+    const key = `growthMeasurements_${userId}`;
+    localStorage.setItem(key, JSON.stringify(this.measurements));
+    console.log('💾 Mesures sauvegardées en local:', this.measurements.length);
+    
+  } catch (error) {
+    console.error('❌ Erreur sauvegarde localStorage:', error);
   }
+}
+
+//   private getLocalMeasurements(): GrowthRecord[] {
+//     const userId = localStorage.getItem('userId');
+//     if (!userId) return [];
+
+//     const saved = localStorage.getItem(`growthMeasurements_${userId}`);
+//     return saved ? JSON.parse(saved) : [];
+//   }
+
+
+
+//   private saveLocalMeasurements() {
+//   const userId = localStorage.getItem('userId');
+//   if (!userId) return;
+  
+//   localStorage.setItem(
+//     `growthMeasurements_${userId}`,
+//     JSON.stringify(this.measurements)
+//   );
+// }
+
 }

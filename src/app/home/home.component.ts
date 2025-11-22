@@ -2,17 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatbotComponent } from '../chatbot/chatbot.component';
+import { SettingComponent } from '../setting/setting.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule,ChatbotComponent],
+  imports: [CommonModule,ChatbotComponent,SettingComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
   isAuthenticated = false;
   showLoginModal = false;
-  userName = 'Ngor';
+    showSettings = false;
   
   // Données pour les plantes découvertes
   discoveredPlants = [
@@ -55,7 +56,18 @@ export class HomeComponent {
   navigateTologout() {
           this.router.navigate(['/logout']);
   }
-  
+
+  openSettings() {
+    this.showSettings = true;
+    // Empêcher le scroll du body quand le menu est ouvert
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeSettings() {
+    this.showSettings = false;
+    // Réactiver le scroll
+    document.body.style.overflow = 'auto';
+  }
 }
 
  
