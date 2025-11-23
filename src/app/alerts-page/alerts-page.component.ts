@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertService, AlertItem } from '../services/alert.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-alerts-page',
@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
 export class AlertsPageComponent implements OnInit {
   alerts: AlertItem[] = [];
 
-  constructor(private alertService: AlertService) {}
+  constructor(private alertService: AlertService, private router: Router) {}
 
   ngOnInit() {
     // Récupérer les alertes
@@ -30,6 +30,9 @@ export class AlertsPageComponent implements OnInit {
     if (!alert.read) {
       this.alertService.markRead(alert.id);
     }
+  }
+  goHome(){
+    this.router.navigate(['/home']);
   }
 
   /** Supprimer une seule alerte */

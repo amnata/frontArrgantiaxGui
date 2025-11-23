@@ -106,55 +106,110 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  // login(credentials: { email: string; password: string }): Observable<any> {
+  //   return this.http.post<any>(`${this.apiUrl}/login`, credentials)
+  //     .pipe(
+  //       tap(response => {
+  //         console.log('📥 Réponse complète du login:', response);
+          
+  //         // Sauvegarder le token
+  //         if (response.token) {
+  //           localStorage.setItem('token', response.token);
+  //           console.log('✅ Token sauvegardé');
+  //         }
+          
+  //         // Sauvegarder userId - deux formats possibles
+  //         if (response.userId) {
+  //           localStorage.setItem('userId', response.userId.toString());
+  //           console.log('✅ UserId sauvegardé (direct):', response.userId);
+  //         } else if (response.user && response.user.id) {
+  //           localStorage.setItem('userId', response.user.id.toString());
+  //           console.log('✅ UserId sauvegardé (depuis user.id):', response.user.id);
+  //         }
+          
+  //         // Sauvegarder email
+  //         if (response.email) {
+  //           localStorage.setItem('userEmail', response.email);
+  //         } else if (response.user && response.user.email) {
+  //           localStorage.setItem('userEmail', response.user.email);
+  //         }
+          
+  //         // Sauvegarder nom et prénom
+  //         if (response.nom) {
+  //           localStorage.setItem('userNom', response.nom);
+  //         } else if (response.user && response.user.nom) {
+  //           localStorage.setItem('userNom', response.user.nom);
+  //         }
+          
+  //         if (response.prenom) {
+  //           localStorage.setItem('userPrenom', response.prenom);
+  //         } else if (response.user && response.user.prenom) {
+  //           localStorage.setItem('userPrenom', response.user.prenom);
+  //         }
+          
+  //         // Log final
+  //         console.log('📦 localStorage après login:');
+  //         console.log('  - token:', !!localStorage.getItem('token'));
+  //         console.log('  - userId:', localStorage.getItem('userId'));
+  //         console.log('  - email:', localStorage.getItem('userEmail'));
+  //       })
+  //     );
+  // }
+
+
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials)
-      .pipe(
-        tap(response => {
-          console.log('📥 Réponse complète du login:', response);
-          
-          // Sauvegarder le token
-          if (response.token) {
-            localStorage.setItem('token', response.token);
-            console.log('✅ Token sauvegardé');
-          }
-          
-          // Sauvegarder userId - deux formats possibles
-          if (response.userId) {
-            localStorage.setItem('userId', response.userId.toString());
-            console.log('✅ UserId sauvegardé (direct):', response.userId);
-          } else if (response.user && response.user.id) {
-            localStorage.setItem('userId', response.user.id.toString());
-            console.log('✅ UserId sauvegardé (depuis user.id):', response.user.id);
-          }
-          
-          // Sauvegarder email
-          if (response.email) {
-            localStorage.setItem('userEmail', response.email);
-          } else if (response.user && response.user.email) {
-            localStorage.setItem('userEmail', response.user.email);
-          }
-          
-          // Sauvegarder nom et prénom
-          if (response.nom) {
-            localStorage.setItem('userNom', response.nom);
-          } else if (response.user && response.user.nom) {
-            localStorage.setItem('userNom', response.user.nom);
-          }
-          
-          if (response.prenom) {
-            localStorage.setItem('userPrenom', response.prenom);
-          } else if (response.user && response.user.prenom) {
-            localStorage.setItem('userPrenom', response.user.prenom);
-          }
-          
-          // Log final
-          console.log('📦 localStorage après login:');
-          console.log('  - token:', !!localStorage.getItem('token'));
-          console.log('  - userId:', localStorage.getItem('userId'));
-          console.log('  - email:', localStorage.getItem('userEmail'));
-        })
-      );
-  }
+  return this.http.post<any>(`${this.apiUrl}/login`, credentials)
+    .pipe(
+      tap(response => {
+        console.log('📥 Réponse du login:', response);
+
+        /** ------------------------------
+         * 1) Sauvegarde du token
+         * ------------------------------ */
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+          console.log('✅ Token sauvegardé');
+        }
+
+        /** ------------------------------
+         * 2) Sauvegarde userId (si présent)
+         * ------------------------------ */
+        const userId =
+          response.userId ??
+          response.user?.id ??
+          null;
+
+        if (userId) {
+          localStorage.setItem('userId', userId.toString());
+          console.log('✅ UserId sauvegardé:', userId);
+        }
+
+        /** ------------------------------
+         * 3) Appel automatique du profil `/me`
+         * ------------------------------ */
+        if (response.token) {
+          this.http.get(`${this.apiUrl}/me`, {
+            headers: { Authorization: `Bearer ${response.token}` }
+          }).subscribe({
+            next: (user: any) => {
+              console.log("🙋 Profil chargé automatiquement:", user);
+
+              // Sauvegarde le user complet
+              localStorage.setItem('user', JSON.stringify(user));
+              localStorage.setItem('userEmail', user.email);
+              localStorage.setItem('userNom', user.nom);
+              localStorage.setItem('userPrenom', user.prenom);
+
+              console.log("📦 User complet sauvegardé !");
+            },
+            error: err => {
+              console.error("❌ Erreur récupération profil /me:", err);
+            }
+          });
+        }
+      })
+    );
+}
 
   register(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, credentials);

@@ -10,6 +10,7 @@ import { WeatherNotifService } from '../services/weather-notif.service';
 
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { DailyTipWidgetComponent } from '../daily-tip-widget/daily-tip-widget.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -24,12 +25,12 @@ import { DailyTipWidgetComponent } from '../daily-tip-widget/daily-tip-widget.co
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  user: { nom: string; prenom: string } | null = null;
 
   isAuthenticated = false;
   showLoginModal = false;
   showSettings = false;
 
-  userName = 'Ngor';
   unreadCount = 0;
 
   todayWeather: any;
@@ -51,12 +52,22 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private alertService: AlertService,
-    private weatherService: WeatherNotifService
-  ) {
+    private weatherService: WeatherNotifService,
+    private userService: UserService
+  ) { 
     this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
   }
 
   ngOnInit() {
+   // S'abonner au BehaviorSubject pour afficher le prénom immédiatement dès qu'il est disponible
+  this.userService.currentUser$.subscribe(user => {
+    this.user = user;
+  });
+
+  // Si user non présent (login récent), charger depuis le backend
+  if (!this.user) {
+    this.userService.fetchCurrentUser().subscribe();
+  }
     // Compter les alertes non lues
     this.alertService.unreadCount$.subscribe(count => {
       this.unreadCount = count;

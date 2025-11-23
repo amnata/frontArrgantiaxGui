@@ -1,102 +1,185 @@
 <div class="culture-detail-container">
-  <!-- Header avec bouton retour -->
-  <header class="detail-header">
-    <button class="back-button" (click)="goBack()">
-      <span class="back-arrow">←</span> Retour à l'accueil
-    </button>
-    <div class="header-title">
-      <h1>Détails de la Culture</h1>
-    </div>
-  </header>
-
+  <!-- Header moderne avec navigation -->
+  <button class="btn-cancel" (click)="goHome()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>  </button>
   <!-- Contenu principal -->
   <main class="detail-content" *ngIf="plant">
-    <!-- En-tête de la plante -->
-    <section class="plant-hero">
-      <div class="plant-emoji-section">
-        <span class="plant-emoji">{{ plant.emoji }}</span>
+    
+    <!-- Hero Section moderne -->
+    <section class="plant-hero-modern">
+      <div class="hero-background">
+        <div class="hero-pattern"></div>
       </div>
-      <div class="plant-basic-info">
-        <h2 class="plant-name">{{ plant.name }}</h2>
-        <p class="plant-type-badge">{{ plant.type }}</p>
-        <p class="plant-family">Famille : {{ plant.famille }}</p>
-        <p class="plant-short-desc">{{ plant.description }}</p>
+      <div class="hero-content">
+        <div class="plant-emoji-container">
+          <div class="emoji-circle">
+            <span class="plant-emoji-large">{{ plant.emoji }}</span>
+          </div>
+        </div>
+        <div class="plant-info-header">
+          <div class="badges-row">
+            <span class="type-badge">{{ plant.type }}</span>
+            <span class="family-badge">{{ plant.famille }}</span>
+          </div>
+          <h1 class="plant-title">{{ plant.name }}</h1>
+          <p class="plant-subtitle">{{ plant.description }}</p>
+        </div>
       </div>
     </section>
 
-    <!-- Description complète -->
-    <section class="info-section">
-      <h3 class="section-title">📖 Description Complète</h3>
-      <p class="plant-full-desc">{{ plant.fullDescription }}</p>
+    <!-- Description complète avec design moderne -->
+    <section class="description-card">
+      <div class="card-header">
+        <div class="header-icon">📖</div>
+        <h2 class="card-title">À propos de cette plante</h2>
+      </div>
+      <p class="description-text">{{ plant.fullDescription }}</p>
     </section>
 
-    <!-- Informations de culture -->
-    <div class="info-grid">
-      <!-- Périodes -->
-      <section class="info-card">
-        <h4 class="info-card-title">📅 Calendrier</h4>
-        <div class="info-item">
-          <span class="info-label">Période de plantation :</span>
-          <span class="info-value">{{ plant.periodePlantation }}</span>
+    <!-- Calendrier et environnement en 2 colonnes -->
+    <div class="info-columns">
+      <!-- Calendrier -->
+      <section class="info-card-modern calendar-card">
+        <div class="card-header-compact">
+          <div class="card-icon">📅</div>
+          <h3 class="card-title-compact">Calendrier</h3>
         </div>
-        <div class="info-item">
-          <span class="info-label">Période de récolte :</span>
-          <span class="info-value">{{ plant.periodeRecolte }}</span>
-        </div>
-      </section>
-
-      <!-- Conditions de croissance -->
-      <section class="info-card">
-        <h4 class="info-card-title">🌱 Environnement</h4>
-        <div class="info-item">
-          <span class="info-label">Type de sol :</span>
-          <span class="info-value">{{ plant.sol }}</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Climat idéal :</span>
-          <span class="info-value">{{ plant.climat }}</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Besoins en eau :</span>
-          <span class="info-value">{{ plant.arrosage }}</span>
+        <div class="info-list">
+          <div class="info-row">
+            <div class="info-icon">🌱</div>
+            <div class="info-content">
+              <span class="info-label">Plantation</span>
+              <span class="info-value-modern">{{ plant.periodePlantation }}</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">🌾</div>
+            <div class="info-content">
+              <span class="info-label">Récolte</span>
+              <span class="info-value-modern">{{ plant.periodeRecolte }}</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Entretien et santé -->
-      <section class="info-card">
-        <h4 class="info-card-title">🔧 Entretien & Santé</h4>
-        <div class="info-item">
-          <span class="info-label">Entretien requis :</span>
-          <span class="info-value">{{ plant.entretien }}</span>
+      <!-- Environnement -->
+      <section class="info-card-modern environment-card">
+        <div class="card-header-compact">
+          <div class="card-icon">🌍</div>
+          <h3 class="card-title-compact">Environnement</h3>
         </div>
-        <div class="info-item">
-          <span class="info-label">Maladies courantes :</span>
-          <span class="info-value">{{ plant.maladies }}</span>
+        <div class="info-list">
+          <div class="info-row">
+            <div class="info-icon">🏔️</div>
+            <div class="info-content">
+              <span class="info-label">Type de sol</span>
+              <span class="info-value-modern">{{ plant.sol }}</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">☀️</div>
+            <div class="info-content">
+              <span class="info-label">Climat</span>
+              <span class="info-value-modern">{{ plant.climat }}</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">💧</div>
+            <div class="info-content">
+              <span class="info-label">Arrosage</span>
+              <span class="info-value-modern">{{ plant.arrosage }}</span>
+            </div>
+          </div>
         </div>
-      </section>
-
-      <!-- Avantages -->
-      <section class="info-card">
-        <h4 class="info-card-title">⭐ Avantages</h4>
-        <p class="advantages-text">{{ plant.avantages }}</p>
       </section>
     </div>
 
-    <!-- Conseils de culture -->
-    <section class="tips-section">
-      <h3 class="section-title">💡 Conseils de Culture Pratiques</h3>
-      <div class="tips-list">
-        <div *ngFor="let conseil of plant.conseils" class="tip-item">
-          <span class="tip-bullet">•</span>
-          <span class="tip-text">{{ conseil }}</span>
+    <!-- Entretien et Santé -->
+    <section class="care-card">
+      <div class="card-header">
+        <div class="header-icon">🛠️</div>
+        <h2 class="card-title">Entretien & Santé</h2>
+      </div>
+      <div class="care-grid">
+        <div class="care-item">
+          <div class="care-label">
+            <span class="care-emoji">✂️</span>
+            <span>Entretien</span>
+          </div>
+          <p class="care-value">{{ plant.entretien }}</p>
+        </div>
+        <div class="care-item">
+          <div class="care-label">
+            <span class="care-emoji">🦠</span>
+            <span>Maladies courantes</span>
+          </div>
+          <p class="care-value">{{ plant.maladies }}</p>
         </div>
       </div>
     </section>
+
+    <!-- Avantages avec style spotlight -->
+    <section class="advantages-card">
+      <div class="card-header">
+        <div class="header-icon">⭐</div>
+        <h2 class="card-title">Pourquoi cultiver cette plante ?</h2>
+      </div>
+      <div class="advantages-content">
+        <p class="advantages-text-modern">{{ plant.avantages }}</p>
+      </div>
+    </section>
+
+    <!-- Conseils pratiques avec design moderne -->
+    <section class="tips-card">
+      <div class="card-header">
+        <div class="header-icon">💡</div>
+        <h2 class="card-title">Conseils Pratiques</h2>
+      </div>
+      <div class="tips-grid">
+        <div *ngFor="let conseil of plant.conseils; let i = index" class="tip-card">
+          <div class="tip-number">{{ i + 1 }}</div>
+          <p class="tip-text-modern">{{ conseil }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to action -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h3 class="cta-title">Prêt à cultiver {{ plant.name }} ?</h3>
+        <p class="cta-subtitle">Commencez votre culture dès maintenant</p>
+        <div class="cta-buttons">
+          <button class="btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Ajouter à mes cultures
+          </button>
+          <button class="btn-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Télécharger le guide
+          </button>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Loading state -->
-  <div *ngIf="!plant" class="loading-state">
-    <div class="loading-spinner"></div>
-    <p>Chargement des détails de la culture...</p>
+  <!-- Loading state moderne -->
+  <div *ngIf="!plant" class="loading-container">
+    <div class="loading-spinner-modern">
+      <div class="spinner-circle"></div>
+      <div class="spinner-circle"></div>
+      <div class="spinner-circle"></div>
+    </div>
+    <p class="loading-text">Chargement des détails...</p>
   </div>
+
 </div>

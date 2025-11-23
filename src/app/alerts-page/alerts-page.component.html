@@ -1,9 +1,13 @@
 <div class="alerts-page">
   <div class="header">
+    <button class="btn-back" (click)="goHome()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+    </button>
     <h2>📢 Historique des alertes météo</h2>
     <div class="controls">
       <button (click)="clearAll()" class="btn-clear">Tout supprimer</button>
-      <a routerLink="/home" class="btn-back">Retour</a>
     </div>
   </div>
 
@@ -17,8 +21,6 @@
         <div class="title">{{ a.title }}</div>
         <div class="msg">{{ a.message }}</div>
        <div class="meta" *ngIf="a.timestamp">{{ a.timestamp | date:'short' }}</div>
-       
-
       </div>
       <div class="right">
         <button (click)="markRead(a)">Marquer lu</button>

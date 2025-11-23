@@ -175,7 +175,7 @@ export class CultureDetailComponent implements OnInit {
     }
   }
 
-  goBack() {
+  goHome() {
     this.router.navigate(['/home']);
   }
 }
